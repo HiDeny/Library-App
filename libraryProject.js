@@ -39,7 +39,12 @@ function addBookForm() {
 		const newBookAuthor = newBookData.author;
 		const newBookPages = newBookData.pages;
 		const newBookRead = newBookData.read ? true : false;
-		const wholeNewBook = new Book(newBookTitle, newBookAuthor, newBookPages, newBookRead);
+		const wholeNewBook = new Book(
+			newBookTitle,
+			newBookAuthor,
+			newBookPages,
+			newBookRead
+		);
 		// Add new Book element
 		myLibrary.push(wholeNewBook);
 		const newBookElement = addBookElement(wholeNewBook);
@@ -52,10 +57,12 @@ function addBookForm() {
 	//* Submit button
 	const submitBtn = document.createElement('button');
 	submitBtn.setAttribute('type', 'submit');
+	submitBtn.setAttribute('class', 'submitBtn');
 	submitBtn.innerText = 'Add!';
 
 	//* Cancel button
 	const cancelBtn = document.createElement('button');
+	cancelBtn.setAttribute('class', 'cancelBtn');
 	cancelBtn.innerText = 'x';
 	cancelBtn.addEventListener('click', (e) => {
 		e.preventDefault();
@@ -119,7 +126,7 @@ function addBookForm() {
 	// Input - Read (checkbox);
 	const inputRead = document.createElement('input');
 	inputRead.setAttribute('type', 'checkbox');
-	inputRead.setAttribute('id', 'Read');
+	inputRead.setAttribute('id', 'read');
 	inputRead.setAttribute('name', 'read');
 	// inputRead.toggleAttribute('required');
 	// Append
@@ -159,26 +166,36 @@ function addBookElement(book) {
 	// Pages
 	const bookPages = document.createElement('p');
 	bookPages.textContent += `${book.pages}`;
-	
+
 	bookCardElement.appendChild(bookPages);
 	// Read
 	const bookReadBtn = document.createElement('button');
+	bookReadBtn.setAttribute('class','readBtn');
 	let bookRead = book.read;
-	bookReadBtn.textContent = `${bookRead === true ? 'Finished!' : "Let's read!"}`;
-	bookReadBtn.style.backgroundColor = `${bookRead === true ? 'gray' : "greenyellow"}`
-// TODO Change Read status
+	bookReadBtn.textContent = `${
+		bookRead === true ? 'Finished!' : "Let's read!"
+	}`;
+	bookReadBtn.style.backgroundColor = `${
+		bookRead === true ? 'gray' : 'greenyellow'
+	}`;
+	// TODO Change Read status
 	bookReadBtn.addEventListener('click', () => {
 		let revertRead = !bookRead;
-		bookReadBtn.textContent = `${revertRead === true ? 'Finished!' : "Let's read!"}`;
-		bookReadBtn.style.backgroundColor = `${revertRead === true ? 'gray' : "greenyellow"}`;
+		bookReadBtn.textContent = `${
+			revertRead === true ? 'Finished!' : "Let's read!"
+		}`;
+		bookReadBtn.style.backgroundColor = `${
+			revertRead === true ? 'gray' : 'greenyellow'
+		}`;
 		bookRead = revertRead;
 		book.read = bookRead;
-	})
+	});
 
 	bookCardElement.appendChild(bookReadBtn);
 
-// TODO Remove Book
+	// TODO Remove Book
 	const bookRemoveBtn = document.createElement('button');
+	bookRemoveBtn.setAttribute('class', 'bookRmvBtn');
 	bookRemoveBtn.textContent += `x`;
 	bookRemoveBtn.addEventListener('click', () => {
 		// Delete from Array
@@ -202,25 +219,26 @@ function createElementsFromLibrary() {
 	}
 }
 
-
 // DOM elements modification
 // Add book btn
-const addBookButton = document.querySelector('#addBookButton');
-addBookButton.addEventListener('click', () => {
+const addBookBtn = document.createElement('button');
+addBookBtn.setAttribute('id', 'addBookBtn');
+addBookBtn.addEventListener('click', () => {
 	bookShelve.appendChild(addBookForm());
-})
+});
 
 // DOM Elements
 const mainDiv = document.querySelector('#main');
+const headerEle = document.querySelector('header');
 const bookShelve = document.querySelector('.bookShelve');
 
+headerEle.appendChild(addBookBtn);
 
 //! TESTING
 // Populate the library wit examples
 myLibrary.push(new Book('Title of the book', 'Someone wrote it', 10));
 myLibrary.push(new Book('Title 2', 'Someone wrote it 2', 50));
 myLibrary.push(new Book('Title 3', 'wrote it 2', 40));
-
 
 //! Useless
 createElementsFromLibrary();
