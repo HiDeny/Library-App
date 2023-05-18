@@ -6,7 +6,6 @@
 //* Connect functions to DOM
 
 // TODO Store Books
-
 let myLibrary = [];
 
 // TODO Book Creation
@@ -18,19 +17,10 @@ function Book(title, author, pages, read = false) {
 	this.pages = pages;
 	this.read = read;
 	this.id = id++;
-	// this.info = () => {
-	// 	return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}, ${this.id}`;
-	// };
 }
 
 // TODO Add Book
 // Button on top of the page
-
-
-function addBookToLib(book) {
-	myLibrary.push(book);
-}
-
 // Form asking for the book information
 function addBookForm() {
 	//* Form
@@ -45,14 +35,30 @@ function addBookForm() {
 		let myFormData = new FormData(e.target);
 		const newBookData = Object.fromEntries(myFormData.entries());
 		// Create new instance of a book
+		const newBookTitle = newBookData.title;
+		const newBookAuthor = newBookData.author;
+		const newBookPages = newBookData.pages;
 		const newBookRead = newBookData.read ? true : false;
-		const wholeNewBook = new Book(newBookData.title, newBookData.author, newBookData.pages, newBookRead, newBookRead);
+		const wholeNewBook = new Book(newBookTitle, newBookAuthor, newBookPages, newBookRead);
 		// Add new Book element
-		addBookToLib(wholeNewBook);
-		console.log(wholeNewBook);
+		myLibrary.push(wholeNewBook);
 		const newBookElement = addBookElement(wholeNewBook);
 		bookShelve.appendChild(newBookElement);
+		// Remove form after adding
+		const form = document.getElementById('bookAddingForm');
+		form.remove();
+	});
 
+	//* Submit button
+	const submitBtn = document.createElement('button');
+	submitBtn.setAttribute('type', 'submit');
+	submitBtn.innerText = 'Add!';
+
+	//* Cancel button
+	const cancelBtn = document.createElement('button');
+	cancelBtn.innerText = 'x';
+	cancelBtn.addEventListener('click', (e) => {
+		e.preventDefault();
 		const form = document.getElementById('bookAddingForm');
 		form.remove();
 	});
@@ -120,11 +126,6 @@ function addBookForm() {
 	labelRead.appendChild(inputRead);
 	liRead.appendChild(labelRead);
 
-	//* Submit button
-	const submitBtn = document.createElement('button');
-	submitBtn.setAttribute('type', 'submit');
-	submitBtn.innerText = 'Add!';
-
 	// Append inputs to form
 	formAdd.appendChild(unList);
 	unList.appendChild(liTitle);
@@ -132,42 +133,10 @@ function addBookForm() {
 	unList.appendChild(liPages);
 	unList.appendChild(liRead);
 	unList.appendChild(submitBtn);
+	unList.appendChild(cancelBtn);
 
 	return formAdd;
 }
-
-// TODO Remove Book
-
-function removeBook(event) {
-	const theBookID = event.target.id;
-	// Delete from Array
-	const bookToDelArr = myLibrary.indexOf(
-		myLibrary.find((book) => book.id === Number(theBookID))
-	);
-	myLibrary.splice(bookToDelArr, 1);
-	// Remove from DOM
-	const theBookToDelete = document.getElementsByClassName(
-		`book${theBookID}`
-	)[0];
-	theBookToDelete.remove();
-}
-
-// TODO Change Read status
-// ID?
-// Toggle button
-function changeRead() {}
-
-// Populate the library wit examples
-
-addBookToLib(new Book('Title of the book', 'Someone wrote it', 10));
-addBookToLib(new Book('Title 2', 'Someone wrote it 2', 50));
-addBookToLib(new Book('Title 3', 'wrote it 2', 40));
-// console.log(myLibrary);
-
-// removeBook(1);
-// removeBook(2);
-
-// console.log(myLibrary);
 
 // TODO Display Books
 let bookElements = [];
@@ -175,7 +144,8 @@ let bookElements = [];
 function addBookElement(book) {
 	// Card
 	const bookCardElement = document.createElement('div');
-	bookCardElement.setAttribute('class', `bookCard book${book.id}`);
+	bookCardElement.setAttribute('id', `${book.id}`);
+	bookCardElement.setAttribute('class', `bookCard`);
 	// Title
 	const bookTitle = document.createElement('h2');
 	bookTitle.innerText = `${book.title}`;
@@ -189,26 +159,42 @@ function addBookElement(book) {
 	// Pages
 	const bookPages = document.createElement('p');
 	bookPages.textContent += `${book.pages}`;
-
+	
 	bookCardElement.appendChild(bookPages);
 	// Read
-	const bookRead = document.createElement('button');
-	let finishedReading = book.read === true ? 'Finished!' : "Let's read!";
-	bookRead.textContent += `${finishedReading}`;
+	const bookReadBtn = document.createElement('button');
+	let bookRead = book.read;
+	bookReadBtn.textContent = `${bookRead === true ? 'Finished!' : "Let's read!"}`;
+	bookReadBtn.style.backgroundColor = `${bookRead === true ? 'gray' : "greenyellow"}`
+// TODO Change Read status
+	bookReadBtn.addEventListener('click', () => {
+		let revertRead = !bookRead;
+		bookReadBtn.textContent = `${revertRead === true ? 'Finished!' : "Let's read!"}`;
+		bookReadBtn.style.backgroundColor = `${revertRead === true ? 'gray' : "greenyellow"}`;
+		bookRead = revertRead;
+		book.read = bookRead;
+	})
 
-	bookCardElement.appendChild(bookRead);
-	// Remove
+	bookCardElement.appendChild(bookReadBtn);
+
+// TODO Remove Book
 	const bookRemoveBtn = document.createElement('button');
-	bookRemoveBtn.setAttribute('id', `${book.id}`);
-	bookRemoveBtn.textContent += `X`;
-	bookRemoveBtn.addEventListener('click', removeBook);
+	bookRemoveBtn.textContent += `x`;
+	bookRemoveBtn.addEventListener('click', () => {
+		// Delete from Array
+		myLibrary.splice(myLibrary.indexOf(book), 1);
+		// Remove from DOM
+		document.getElementById(book.id).remove();
+	});
 
 	bookCardElement.appendChild(bookRemoveBtn);
 	// Push to Arr
+	//! Useless
 	bookElements.push(bookCardElement);
 	return bookCardElement;
 }
 
+//! Useless
 function createElementsFromLibrary() {
 	for (let book in myLibrary) {
 		addBookElement(myLibrary[book]);
@@ -216,19 +202,25 @@ function createElementsFromLibrary() {
 	}
 }
 
+
 // DOM elements modification
+// Add book btn
+const addBookButton = document.querySelector('#addBookButton');
+addBookButton.addEventListener('click', () => {
+	bookShelve.appendChild(addBookForm());
+})
 
 // DOM Elements
-
-//! TESTING
 const mainDiv = document.querySelector('#main');
 const bookShelve = document.querySelector('.bookShelve');
-const addBookButton = document.querySelector('#addBookButton');
-const form = addBookForm();
-addBookButton.addEventListener('click', () => {
-	const form = addBookForm();
-	bookShelve.appendChild(form);
-})
-// hide form
 
+
+//! TESTING
+// Populate the library wit examples
+myLibrary.push(new Book('Title of the book', 'Someone wrote it', 10));
+myLibrary.push(new Book('Title 2', 'Someone wrote it 2', 50));
+myLibrary.push(new Book('Title 3', 'wrote it 2', 40));
+
+
+//! Useless
 createElementsFromLibrary();
