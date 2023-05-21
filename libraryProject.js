@@ -11,9 +11,10 @@ let myLibrary = [];
 // TODO Book Creation
 let id = 0;
 
-function Book(title, author, pages, read = false) {
+function Book(title, author, description = '', pages, read = false) {
 	this.title = title;
 	this.author = author;
+	this.description = description;
 	this.pages = pages;
 	this.read = read;
 	this.id = id++;
@@ -37,11 +38,15 @@ function addBookForm() {
 		// Create new instance of a book
 		const newBookTitle = newBookData.title;
 		const newBookAuthor = newBookData.author;
+		const newBookDescription = newBookData.description
+			? newBookData.description
+			: '';
 		const newBookPages = newBookData.pages;
 		const newBookRead = newBookData.read ? true : false;
 		const wholeNewBook = new Book(
 			newBookTitle,
 			newBookAuthor,
+			newBookDescription,
 			newBookPages,
 			newBookRead
 		);
@@ -72,6 +77,7 @@ function addBookForm() {
 
 	//* UL - LI
 	const unList = document.createElement('ul');
+	unList.setAttribute('class', 'formContent');
 
 	//* Label - Title
 	const liTitle = document.createElement('li');
@@ -103,6 +109,19 @@ function addBookForm() {
 	labelAuthor.appendChild(inputAuthor);
 	liAuthor.appendChild(labelAuthor);
 
+	//* Label - Description
+	const liDescription = document.createElement('li');
+	const labelDescription = document.createElement('label');
+	labelDescription.setAttribute('for', 'description');
+	labelDescription.innerText = 'Description:';
+	// Input - Description
+	const inputDescription = document.createElement('textarea');
+	inputDescription.setAttribute('id', 'description');
+	inputDescription.setAttribute('name', 'description');
+	// Append
+	labelDescription.appendChild(inputDescription);
+	liDescription.appendChild(labelDescription);
+
 	//* Label - Pages
 	const liPages = document.createElement('li');
 	const labelPages = document.createElement('label');
@@ -113,7 +132,6 @@ function addBookForm() {
 	inputPages.setAttribute('type', 'number');
 	inputPages.setAttribute('id', 'pages');
 	inputPages.setAttribute('name', 'pages');
-	inputPages.toggleAttribute('required');
 	// Append
 	labelPages.appendChild(inputPages);
 	liPages.appendChild(labelPages);
@@ -137,6 +155,7 @@ function addBookForm() {
 	formAdd.appendChild(unList);
 	unList.appendChild(liTitle);
 	unList.appendChild(liAuthor);
+	unList.appendChild(liDescription);
 	unList.appendChild(liPages);
 	unList.appendChild(liRead);
 	unList.appendChild(submitBtn);
@@ -153,24 +172,40 @@ function addBookElement(book) {
 	const bookCardElement = document.createElement('div');
 	bookCardElement.setAttribute('id', `${book.id}`);
 	bookCardElement.setAttribute('class', `bookCard`);
+	// Book Header
+	const bookHeader = document.createElement('div');
+	bookHeader.setAttribute('class', `bookHeader`);
+	bookCardElement.appendChild(bookHeader);
 	// Title
 	const bookTitle = document.createElement('h2');
 	bookTitle.innerText = `${book.title}`;
 
-	bookCardElement.appendChild(bookTitle);
+	bookHeader.appendChild(bookTitle);
 	// Author
 	const bookAuthor = document.createElement('h3');
 	bookAuthor.textContent += `${book.author}`;
 
-	bookCardElement.appendChild(bookAuthor);
+	bookHeader.appendChild(bookAuthor);
+	// Description
+	const bookDescriptionEle = document.createElement('div');
+	bookDescriptionEle.setAttribute('class', 'descriptionDiv');
+
+	const bookDescription = document.createElement('p');
+	bookDescription.setAttribute('class', 'description');
+
+	bookDescription.textContent += `${book.description}`;
+
+	bookCardElement.appendChild(bookDescriptionEle);
+	bookDescriptionEle.appendChild(bookDescription);
 	// Pages
 	const bookPages = document.createElement('p');
+	bookPages.setAttribute('class', 'pages');
 	bookPages.textContent += `${book.pages}`;
 
 	bookCardElement.appendChild(bookPages);
 	// Read
 	const bookReadBtn = document.createElement('button');
-	bookReadBtn.setAttribute('class','readBtn');
+	bookReadBtn.setAttribute('class', 'readBtn');
 	let bookRead = book.read;
 	bookReadBtn.textContent = `${
 		bookRead === true ? 'Finished!' : "Let's read!"
@@ -196,7 +231,7 @@ function addBookElement(book) {
 	// TODO Remove Book
 	const bookRemoveBtn = document.createElement('button');
 	bookRemoveBtn.setAttribute('class', 'bookRmvBtn');
-	bookRemoveBtn.textContent += `x`;
+	bookRemoveBtn.textContent += 'x';
 	bookRemoveBtn.addEventListener('click', () => {
 		// Delete from Array
 		myLibrary.splice(myLibrary.indexOf(book), 1);
@@ -236,9 +271,16 @@ headerEle.appendChild(addBookBtn);
 
 //! TESTING
 // Populate the library wit examples
-myLibrary.push(new Book('Title of the book', 'Someone wrote it', 10));
-myLibrary.push(new Book('Title 2', 'Someone wrote it 2', 50));
-myLibrary.push(new Book('Title 3', 'wrote it 2', 40));
+myLibrary.push(new Book('Title of the book', 'Author', 'Desc', 10));
+myLibrary.push(new Book('Title 2', 'Someone wrote it 2', '', 50));
+myLibrary.push(
+	new Book(
+		'Title 3',
+		'wrote it 2',
+		'This is Long Description This is Long Description This is Long Description This is Long Description This is Long Description This is Long Description This is Long Description ',
+		40
+	)
+);
 
 //! Useless
 createElementsFromLibrary();

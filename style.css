@@ -349,7 +349,7 @@
   }
 
 
-/* ---------------------- MY CSS ---------------------- */
+/*! ---------------------- MY CSS ---------------------- */
 :root {
     font-family: Helvetica;
 }
@@ -358,6 +358,10 @@
 /* HEADER */
 header {
     display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    box-shadow: 0px 5px 10px 0px rgb(162, 162, 162);
+    z-index: 10;
 }
 
 .logo {
@@ -368,56 +372,131 @@ header {
     border-radius: 100%;
     background-image: url("./imgs/add.png");
     background-size: contain;
-    background-color: transparent;
+    background-color: white;
     width: 60px;
     height: 60px;
+    border: 0px;
+}
+
+#addBookBtn:active {
+  background-color: rgb(213, 213, 213);
 }
 
 
 /* MAIN */
 #main {
-    background-color: beige;
+    background-color: lemonchiffon;
+    height: 90%;
 }
 
 /* BOOKS */
 .bookShelve {
+    padding: 20px;
     display: grid;
-    grid-template-columns: repeat(4, 200px);
-    grid-template-rows: repeat(3, 200px);
+    grid-template-columns: repeat(auto-fit, 300px);
+    grid-auto-rows: 367px;
     gap: 20px;
 }
 
 /* Card */
 .bookCard {
-    /* height: 100px; */
-    /* width: 200px; */
-    background-color: palevioletred;
+    display: grid;
+    position: relative;
+    grid-template-rows: 2fr 3fr 1fr 1fr;
+    border-radius: 14px;
+    padding: 10px;
+    background-image: url("./imgs/book\ cover.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    box-shadow: 0px 5px 10px 0px rgb(162, 162, 162);
 }
 
-.bookCard h2{
+/* book */
+.readBtn{
+  border-radius: 20px;
+  width: 230px;
+  position: relative;
+  border: 0px;
+  margin: 0 10px;
+  left: 12px;
+}
 
+.bookRmvBtn{
+  position: absolute;
+  right: 30px;
+  top: 25px;
+  border: 0px;
+  background-color: transparent;
+}
+
+.bookHeader {
+  text-align: center;
+}
+.bookCard h2{
+  font-family: Candara;
+  margin: 40px 55px 0px;
 }
 
 .bookCard h3{
-
+  font-size: 14px;
+  font-weight: 100;
+  margin-top: 10px;
 }
 
-.bookCard p{
+.descriptionDiv {
+  overflow: scroll;
+}
 
+.description {
+  margin-bottom: 0px;
+  margin-right: 20px;
+  margin-left: 20px;
+  font-size: 11px;
+  overflow: scroll;
+}
+
+.pages {
+  display: flex;
+  text-align: center;
+  font-style: italic;
+  font-weight: 200;
+  font-size: 14px;
+  margin-bottom: 5px;
+  align-items: end;
+  justify-content: center;
 }
 
 /* FORM */
 #bookAddingForm{
+  position: absolute;
+  width: 300px;
+  height: 360px;
+  top: 40%;
+  left: 40%;
+  display: grid;
+  grid-template-rows: auto;
+  background-color: burlywood;
 
 }
 
-.formAdd {
-    background-color: yellow;
+.formContent {
+  margin: 20px;
 }
 
 .formAdd ul {
     list-style: none;
     padding-left: 20px;
+    position: relative;
+}
+
+.submitBtn{}
+
+.cancelBtn{
+  position: absolute;
+  right: 15px;
+  top: 0px;
+  border: 0px;
+  background-color: transparent;
 }
 
 /* INPUTS */
@@ -436,9 +515,10 @@ input{}
 /* BTN */
 button{}
 /* form */
-.submitBtn{}
-.cancelBtn{}
-/* book */
-.readBtn{}
-.bookRmvBtn{}
-.addBookBtn{}
+
+
+
+
+/* CHANGRS TO MAKE */
+
+
