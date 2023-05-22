@@ -24,6 +24,8 @@ function Book(title, author, description = '', pages, read = false) {
 // Button on top of the page
 // Form asking for the book information
 function addBookForm() {
+	const formBackground = document.createElement('div');
+	formBackground.setAttribute('class', 'formBackground');
 	//* Form
 	const formAdd = document.createElement('form');
 	formAdd.setAttribute('id', 'bookAddingForm');
@@ -55,8 +57,7 @@ function addBookForm() {
 		const newBookElement = addBookElement(wholeNewBook);
 		bookShelve.appendChild(newBookElement);
 		// Remove form after adding
-		const form = document.getElementById('bookAddingForm');
-		form.remove();
+		formBackground.remove();
 	});
 
 	//* Submit button
@@ -71,10 +72,12 @@ function addBookForm() {
 	cancelBtn.innerText = 'x';
 	cancelBtn.addEventListener('click', (e) => {
 		e.preventDefault();
-		const form = document.getElementById('bookAddingForm');
-		form.remove();
+		formBackground.remove();
 	});
 
+	//* Form Title
+	const formTitle = document.createElement('h3');
+	formTitle.textContent = 'New Book';
 	//* UL - LI
 	const unList = document.createElement('ul');
 	unList.setAttribute('class', 'formContent');
@@ -83,12 +86,12 @@ function addBookForm() {
 	const liTitle = document.createElement('li');
 	const labelTitle = document.createElement('label');
 	labelTitle.setAttribute('for', 'title');
-	labelTitle.innerText = 'Title:';
 	// Input - Title
 	const inputTitle = document.createElement('input');
 	inputTitle.setAttribute('type', 'text');
 	inputTitle.setAttribute('id', 'title');
 	inputTitle.setAttribute('name', 'title');
+	inputTitle.setAttribute('placeholder', 'Title');
 	inputTitle.toggleAttribute('required');
 	// Append
 	labelTitle.appendChild(inputTitle);
@@ -98,12 +101,12 @@ function addBookForm() {
 	const liAuthor = document.createElement('li');
 	const labelAuthor = document.createElement('label');
 	labelAuthor.setAttribute('for', 'author');
-	labelAuthor.innerText = 'Author:';
 	// Input - Author
 	const inputAuthor = document.createElement('input');
 	inputAuthor.setAttribute('type', 'text');
 	inputAuthor.setAttribute('id', 'author');
 	inputAuthor.setAttribute('name', 'author');
+	inputAuthor.setAttribute('placeholder', 'Author');
 	inputAuthor.toggleAttribute('required');
 	// Append
 	labelAuthor.appendChild(inputAuthor);
@@ -113,11 +116,11 @@ function addBookForm() {
 	const liDescription = document.createElement('li');
 	const labelDescription = document.createElement('label');
 	labelDescription.setAttribute('for', 'description');
-	labelDescription.innerText = 'Description:';
 	// Input - Description
 	const inputDescription = document.createElement('textarea');
 	inputDescription.setAttribute('id', 'description');
 	inputDescription.setAttribute('name', 'description');
+	inputDescription.setAttribute('placeholder', 'Description:');
 	// Append
 	labelDescription.appendChild(inputDescription);
 	liDescription.appendChild(labelDescription);
@@ -126,12 +129,12 @@ function addBookForm() {
 	const liPages = document.createElement('li');
 	const labelPages = document.createElement('label');
 	labelPages.setAttribute('for', 'pages');
-	labelPages.innerText = 'Pages:';
 	// Input - Number of pages
 	const inputPages = document.createElement('input');
 	inputPages.setAttribute('type', 'number');
 	inputPages.setAttribute('id', 'pages');
 	inputPages.setAttribute('name', 'pages');
+	inputPages.setAttribute('placeholder', 'Pages');
 	// Append
 	labelPages.appendChild(inputPages);
 	liPages.appendChild(labelPages);
@@ -152,6 +155,8 @@ function addBookForm() {
 	liRead.appendChild(labelRead);
 
 	// Append inputs to form
+	formBackground.appendChild(formAdd);
+	formAdd.appendChild(formTitle);
 	formAdd.appendChild(unList);
 	unList.appendChild(liTitle);
 	unList.appendChild(liAuthor);
@@ -161,7 +166,7 @@ function addBookForm() {
 	unList.appendChild(submitBtn);
 	unList.appendChild(cancelBtn);
 
-	return formAdd;
+	return formBackground;
 }
 
 // TODO Display Books
@@ -200,7 +205,7 @@ function addBookElement(book) {
 	// Pages
 	const bookPages = document.createElement('p');
 	bookPages.setAttribute('class', 'pages');
-	bookPages.textContent += `${book.pages}`;
+	bookPages.textContent += `Pages: ${book.pages}`;
 
 	bookCardElement.appendChild(bookPages);
 	// Read
@@ -211,7 +216,7 @@ function addBookElement(book) {
 		bookRead === true ? 'Finished!' : "Let's read!"
 	}`;
 	bookReadBtn.style.backgroundColor = `${
-		bookRead === true ? 'gray' : 'greenyellow'
+		bookRead === true ? '#D9D3CC' : '#A9BF99'
 	}`;
 	// TODO Change Read status
 	bookReadBtn.addEventListener('click', () => {
@@ -220,7 +225,7 @@ function addBookElement(book) {
 			revertRead === true ? 'Finished!' : "Let's read!"
 		}`;
 		bookReadBtn.style.backgroundColor = `${
-			revertRead === true ? 'gray' : 'greenyellow'
+			revertRead === true ? '#D9D3CC' : '#A9BF99'
 		}`;
 		bookRead = revertRead;
 		book.read = bookRead;
@@ -259,10 +264,11 @@ function createElementsFromLibrary() {
 const addBookBtn = document.createElement('button');
 addBookBtn.setAttribute('id', 'addBookBtn');
 addBookBtn.addEventListener('click', () => {
-	bookShelve.appendChild(addBookForm());
+	bodyDiv.insertBefore(addBookForm(), bodyDiv.firstChild);
 });
 
 // DOM Elements
+const bodyDiv = document.querySelector('body');
 const mainDiv = document.querySelector('#main');
 const headerEle = document.querySelector('header');
 const bookShelve = document.querySelector('.bookShelve');
