@@ -351,22 +351,7 @@
 
 /*! ---------------------- MY CSS ---------------------- */
 /* FONTS */
-@font-face {
-  font-family: 'Foldit';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/foldit/v3/aFTV7PF3Y3c9WdjnoT21K4aFaA.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Foldit';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/foldit/v3/aFTV7PF3Y3c9WdjnoT21K4aFaA.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+
 
 @font-face {
   font-family: 'Mate SC';
@@ -387,43 +372,33 @@
 }
 
 :root {
-    font-family: Helvetica;
+  font-family: 'TimesNewRoman', "Times New Roman", Times, 'Baskerville', Georgia, serif;
 }
 
 /* HEADER */
 header {
     text-align: center;
     padding: 30px;
-    box-shadow: 0px 5px 10px 0px rgb(162, 162, 162);
-    z-index: 10;
     background-color: #F2F2F2;
 }
 
 .logo {
   font-size: 2rem;
   margin: 0px;
-  font-family: mate sc;
+  font-family: 'mate sc';
   color: #26150F;
-  /* font-family: 'foldit'; */
 
 }
 
-.logo h1 {
-  font-family: 'foldit';
-  margin: 0px;
-}
-/* .logo h4 {
-  margin: 0px;
-  font-family: mate sc;
-} */
+
 
 #addBookBtn{
     border-radius: 100%;
-    background-image: url("./imgs/add.png");
+    background-image: url("./imgs/file_add_button_plus_icon_233427.png");
     background-size: contain;
     background-color: #F2F2F2;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     border: 0px;
 }
 
@@ -434,7 +409,7 @@ header {
 
 /* MAIN */
 #main {
-    height: 90%;
+
 }
 
 /* BOOKS */
@@ -442,8 +417,8 @@ header {
     padding: 50px;
     display: grid;
     grid-template-columns: repeat(auto-fit, 300px);
-    grid-auto-rows: 369px;
-    gap: 60px;
+    grid-auto-rows: 469px;
+    gap: 75px;
     justify-content: center;
     background-color: #F2F2F2;
 }
@@ -453,12 +428,14 @@ header {
     display: grid;
     position: relative;
     grid-template-rows: 2fr 3fr 1fr 1fr;
-    border-radius: 14px;
+    border-radius: 20px;
     padding: 10px;
     background-image: url("./imgs/book\ cover.jpg");
     background-repeat: no-repeat;
     background-size: contain;
-    box-shadow: 0px 5px 10px 0px rgb(162, 162, 162);
+    box-shadow: 0px 10px 20px 5px rgb(162, 162, 162);
+    border: 0.5px solid black;
+    background-color: white;
 }
 
 /* book */
@@ -471,6 +448,19 @@ header {
   border: 0px;
   margin: 0 10px;
   left: 12px;
+  background-color: #D9D3CC;
+}
+
+.readBtn:hover {
+  background-color: #b6b1ab
+}
+
+.finished {
+  background-color: #A9BF99;
+}
+
+.finished:hover {
+  background-color: #889c7b;
 }
 
 .bookRmvBtn{
@@ -485,8 +475,8 @@ header {
   text-align: center;
 }
 .bookCard h2{
-  font-family: Candara;
-  margin: 40px 55px 0px;
+  font-family: 'Candara';
+  margin: 40px 30px 0px;
 }
 
 .bookCard h3{
@@ -519,7 +509,7 @@ header {
 }
 
 /* FORM */
-.formBackground {
+.formOverlay {
   background-color: rgba(0, 0, 0, 0.435);
   width: 100%;
   height: 100%;
@@ -539,9 +529,13 @@ header {
   left: 40%;
   background-color: rgb(238, 219, 194);
   border-radius: 10px;
+  font-family: Helvetica, sans-serif;
 }
 
-
+.formAdd h3 {
+  color: #26150F;
+  font-family: 'Mate SC';
+}
 
 
 .formContent {
@@ -557,7 +551,20 @@ header {
     gap: 10px;
 }
 
-.submitBtn{}
+.submitBtn{
+  color: #F2F2F2;
+  background-color: #40241A;
+  padding: 5px 10px;
+  width: 100px;
+  border-radius: 20px;
+  border: 0;
+  align-self: center;
+  font-family: 'Caveat';
+}
+
+.submitBtn:hover {
+  background-color: #603728;
+}
 
 .cancelBtn{
   position: absolute;
@@ -581,23 +588,29 @@ label{}
 input{
  width: 90%;
  border: 0px;
- border-radius: 5px;
- padding: 2px 5px;
+ padding: 5px 0px;
+ background: 0;
+ border-bottom: 1px solid;
 }
+
+input:focus, textarea:focus {
+  outline: 1px black;
+}
+
+
 
 textarea {
   width: 90%;
   border: 0px;
+  padding: 5px 5px;
+  background: 0;
+  border: 1px solid;
   border-radius: 5px;
-  padding: 2px 5px;
   resize: vertical;
   min-height: 100px;
+  background-color: rgb(236, 226, 212);
 }
 
-
-/* BTN */
-button{}
-/* form */
 
 
 

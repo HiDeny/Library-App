@@ -24,8 +24,8 @@ function Book(title, author, description = '', pages, read = false) {
 // Button on top of the page
 // Form asking for the book information
 function addBookForm() {
-	const formBackground = document.createElement('div');
-	formBackground.setAttribute('class', 'formBackground');
+	const formOverlay = document.createElement('div');
+	formOverlay.setAttribute('class', 'formOverlay');
 	//* Form
 	const formAdd = document.createElement('form');
 	formAdd.setAttribute('id', 'bookAddingForm');
@@ -57,7 +57,7 @@ function addBookForm() {
 		const newBookElement = addBookElement(wholeNewBook);
 		bookShelve.appendChild(newBookElement);
 		// Remove form after adding
-		formBackground.remove();
+		formOverlay.remove();
 	});
 
 	//* Submit button
@@ -72,7 +72,7 @@ function addBookForm() {
 	cancelBtn.innerText = 'x';
 	cancelBtn.addEventListener('click', (e) => {
 		e.preventDefault();
-		formBackground.remove();
+		formOverlay.remove();
 	});
 
 	//* Form Title
@@ -132,6 +132,7 @@ function addBookForm() {
 	// Input - Number of pages
 	const inputPages = document.createElement('input');
 	inputPages.setAttribute('type', 'number');
+	inputPages.setAttribute('min', '1');
 	inputPages.setAttribute('id', 'pages');
 	inputPages.setAttribute('name', 'pages');
 	inputPages.setAttribute('placeholder', 'Pages');
@@ -155,7 +156,7 @@ function addBookForm() {
 	liRead.appendChild(labelRead);
 
 	// Append inputs to form
-	formBackground.appendChild(formAdd);
+	formOverlay.appendChild(formAdd);
 	formAdd.appendChild(formTitle);
 	formAdd.appendChild(unList);
 	unList.appendChild(liTitle);
@@ -166,7 +167,7 @@ function addBookForm() {
 	unList.appendChild(submitBtn);
 	unList.appendChild(cancelBtn);
 
-	return formBackground;
+	return formOverlay;
 }
 
 // TODO Display Books
@@ -212,11 +213,11 @@ function addBookElement(book) {
 	const bookReadBtn = document.createElement('button');
 	bookReadBtn.setAttribute('class', 'readBtn');
 	let bookRead = book.read;
+	if (book.read) {
+		bookReadBtn.classList.add('finished');
+	}
 	bookReadBtn.textContent = `${
 		bookRead === true ? 'Finished!' : "Let's read!"
-	}`;
-	bookReadBtn.style.backgroundColor = `${
-		bookRead === true ? '#D9D3CC' : '#A9BF99'
 	}`;
 	// TODO Change Read status
 	bookReadBtn.addEventListener('click', () => {
@@ -224,9 +225,7 @@ function addBookElement(book) {
 		bookReadBtn.textContent = `${
 			revertRead === true ? 'Finished!' : "Let's read!"
 		}`;
-		bookReadBtn.style.backgroundColor = `${
-			revertRead === true ? '#D9D3CC' : '#A9BF99'
-		}`;
+		bookReadBtn.classList.toggle('finished');
 		bookRead = revertRead;
 		book.read = bookRead;
 	});
@@ -259,6 +258,8 @@ function createElementsFromLibrary() {
 	}
 }
 
+
+
 // DOM elements modification
 // Add book btn
 const addBookBtn = document.createElement('button');
@@ -277,16 +278,35 @@ headerEle.appendChild(addBookBtn);
 
 //! TESTING
 // Populate the library wit examples
-myLibrary.push(new Book('Title of the book', 'Author', 'Desc', 10));
-myLibrary.push(new Book('Title 2', 'Someone wrote it 2', '', 50));
 myLibrary.push(
 	new Book(
-		'Title 3',
-		'wrote it 2',
-		'This is Long Description This is Long Description This is Long Description This is Long Description This is Long Description This is Long Description This is Long Description ',
-		40
+		"Harry Potter and the Philosopher's Stone",
+		'J. K. Rowling',
+		"Harry Potter has never even heard of Hogwarts when the letters start dropping on the doormat at number four, Privet Drive. Addressed in green ink on yellowish parchment with a purple seal, they are swiftly confiscated by his grisly aunt and uncle. Then, on Harry's eleventh birthday, a great beetle-eyed giant of a man called Rubeus Hagrid bursts in with some astonishing news: Harry Potter is a wizard, and he has a place at Hogwarts School of Witchcraft and Wizardry. An incredible adventure is about to begin!",
+		352
 	)
 );
+myLibrary.push(
+	new Book(
+		'War and Peace',
+		'Leo Tolstoy',
+		'War and Peace broadly focuses on Napoleon’s invasion of Russia in 1812 and follows three of the most well-known characters in literature: Pierre Bezukhov, the illegitimate son of a count who is fighting for his inheritance and yearning for spiritual fulfillment; Prince Andrei Bolkonsky, who leaves his family behind to fight in the war against Napoleon; and Natasha Rostov, the beautiful young daughter of a nobleman who intrigues both men.',
+		1392
+	)
+);
+myLibrary.push(new Book('The Lord Of The Rings', 'J.R.R. Tolkien', '', 1216, true));
 
 //! Useless
 createElementsFromLibrary();
+
+
+// Local Storage?
+
+// Storage.prototype.setObj = function(key, obj) {
+//     return this.setItem(key, JSON.stringify(obj))
+// }
+// Storage.prototype.getObj = function(key) {
+//     return JSON.parse(this.getItem(key))
+// }
+
+// localStorage.setItem('library', JSON.stringify(myLibrary));
