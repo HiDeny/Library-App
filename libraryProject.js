@@ -8,8 +8,20 @@
 // TODO Store Books
 let myLibrary = [];
 
+let localLibJson = localStorage.getItem('library');
+if (localLibJson) {
+	myLibrary = Array.from(JSON.parse(localLibJson));
+} else {
+	myLibrary = [];
+}
+
 // TODO Book Creation
-let id = 0;
+let localId = localStorage.getItem('id');
+if (localId) {
+	id = localId;
+} else {
+	id = 0;
+}
 
 function Book(title, author, description = '', pages, read = false) {
 	this.title = title;
@@ -53,12 +65,18 @@ function addBookForm() {
 			newBookRead
 		);
 		// Add new Book element
+		localStorage.removeItem('library')
 		myLibrary.push(wholeNewBook);
 		const newBookElement = addBookElement(wholeNewBook);
+		let jsonLibrary = JSON.stringify(myLibrary);
+		localStorage.setItem('library', jsonLibrary);
+		localStorage.setItem('id', id);
 		bookShelve.appendChild(newBookElement);
 		// Remove form after adding
 		formOverlay.remove();
 	});
+
+
 
 	//* Submit button
 	const submitBtn = document.createElement('button');
@@ -91,6 +109,7 @@ function addBookForm() {
 	inputTitle.setAttribute('type', 'text');
 	inputTitle.setAttribute('id', 'title');
 	inputTitle.setAttribute('name', 'title');
+	inputTitle.autofocus = true;
 	inputTitle.setAttribute('placeholder', 'Title');
 	inputTitle.toggleAttribute('required');
 	// Append
@@ -220,7 +239,7 @@ function addBookElement(book) {
 		bookRead === true ? 'Finished!' : "Let's read!"
 	}`;
 	// TODO Change Read status
-	bookReadBtn.addEventListener('click', () => {
+	bookReadBtn.addEventListener('click', (e) => {
 		let revertRead = !bookRead;
 		bookReadBtn.textContent = `${
 			revertRead === true ? 'Finished!' : "Let's read!"
@@ -228,6 +247,17 @@ function addBookElement(book) {
 		bookReadBtn.classList.toggle('finished');
 		bookRead = revertRead;
 		book.read = bookRead;
+		console.log(book.id);
+		console.log(e.target);
+		for (let book in myLibrary) {}
+		// currentBook = myLibrary[book.id];
+		// currentBook.read = revertRead;
+		localStorage.removeItem('library');
+		let jsonLibrary = JSON.stringify(myLibrary);
+		localStorage.setItem('library', jsonLibrary);
+		// console.log(localStorage);
+		// console.log(myLibrary);
+		
 	});
 
 	bookCardElement.appendChild(bookReadBtn);
@@ -241,24 +271,16 @@ function addBookElement(book) {
 		myLibrary.splice(myLibrary.indexOf(book), 1);
 		// Remove from DOM
 		document.getElementById(book.id).remove();
+		localStorage.removeItem('library');
+		let jsonLibrary = JSON.stringify(myLibrary);
+		localStorage.setItem('library', jsonLibrary);		
 	});
 
 	bookCardElement.appendChild(bookRemoveBtn);
 	// Push to Arr
-	//! Useless
 	bookElements.push(bookCardElement);
 	return bookCardElement;
 }
-
-//! Useless
-function createElementsFromLibrary() {
-	for (let book in myLibrary) {
-		addBookElement(myLibrary[book]);
-		bookShelve.appendChild(bookElements[book]);
-	}
-}
-
-
 
 // DOM elements modification
 // Add book btn
@@ -278,35 +300,37 @@ headerEle.appendChild(addBookBtn);
 
 //! TESTING
 // Populate the library wit examples
-myLibrary.push(
-	new Book(
-		"Harry Potter and the Philosopher's Stone",
-		'J. K. Rowling',
-		"Harry Potter has never even heard of Hogwarts when the letters start dropping on the doormat at number four, Privet Drive. Addressed in green ink on yellowish parchment with a purple seal, they are swiftly confiscated by his grisly aunt and uncle. Then, on Harry's eleventh birthday, a great beetle-eyed giant of a man called Rubeus Hagrid bursts in with some astonishing news: Harry Potter is a wizard, and he has a place at Hogwarts School of Witchcraft and Wizardry. An incredible adventure is about to begin!",
-		352
-	)
-);
-myLibrary.push(
-	new Book(
-		'War and Peace',
-		'Leo Tolstoy',
-		'War and Peace broadly focuses on Napoleon’s invasion of Russia in 1812 and follows three of the most well-known characters in literature: Pierre Bezukhov, the illegitimate son of a count who is fighting for his inheritance and yearning for spiritual fulfillment; Prince Andrei Bolkonsky, who leaves his family behind to fight in the war against Napoleon; and Natasha Rostov, the beautiful young daughter of a nobleman who intrigues both men.',
-		1392
-	)
-);
-myLibrary.push(new Book('The Lord Of The Rings', 'J.R.R. Tolkien', '', 1216, true));
+// myLibrary.push(
+// 	new Book(
+// 		"Harry Potter and the Philosopher's Stone",
+// 		'J. K. Rowling',
+// 		"Harry Potter has never even heard of Hogwarts when the letters start dropping on the doormat at number four, Privet Drive. Addressed in green ink on yellowish parchment with a purple seal, they are swiftly confiscated by his grisly aunt and uncle. Then, on Harry's eleventh birthday, a great beetle-eyed giant of a man called Rubeus Hagrid bursts in with some astonishing news: Harry Potter is a wizard, and he has a place at Hogwarts School of Witchcraft and Wizardry. An incredible adventure is about to begin!",
+// 		352
+// 	)
+// );
+// myLibrary.push(
+// 	new Book(
+// 		'War and Peace',
+// 		'Leo Tolstoy',
+// 		'War and Peace broadly focuses on Napoleon’s invasion of Russia in 1812 and follows three of the most well-known characters in literature: Pierre Bezukhov, the illegitimate son of a count who is fighting for his inheritance and yearning for spiritual fulfillment; Prince Andrei Bolkonsky, who leaves his family behind to fight in the war against Napoleon; and Natasha Rostov, the beautiful young daughter of a nobleman who intrigues both men.',
+// 		1392
+// 	)
+// );
+// myLibrary.push(new Book('The Lord Of The Rings', 'J.R.R. Tolkien', '', 1216, true));
 
-//! Useless
+
+
 createElementsFromLibrary();
 
 
-// Local Storage?
+// LOCAL STORAGE
 
-// Storage.prototype.setObj = function(key, obj) {
-//     return this.setItem(key, JSON.stringify(obj))
-// }
-// Storage.prototype.getObj = function(key) {
-//     return JSON.parse(this.getItem(key))
-// }
-
-// localStorage.setItem('library', JSON.stringify(myLibrary));
+function createElementsFromLibrary() {
+	const str = localStorage.getItem('library');
+	const parsedLib = JSON.parse(str);
+	console.log(parsedLib);
+	for (let book in parsedLib) {
+		addBookElement(parsedLib[book]);
+		bookShelve.appendChild(bookElements[book]);
+	}
+}

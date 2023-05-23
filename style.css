@@ -11,6 +11,7 @@
  html {
     line-height: 1.15; /* 1 */
     -webkit-text-size-adjust: 100%; /* 2 */
+    background-color: #F2F2F2;
   }
   
   /* Sections
@@ -448,19 +449,21 @@ header {
   border: 0px;
   margin: 0 10px;
   left: 12px;
-  background-color: #D9D3CC;
+  background-color: #A9BF99;
+
 }
 
 .readBtn:hover {
-  background-color: #b6b1ab
+  background-color: #889c7b;  
 }
 
 .finished {
-  background-color: #A9BF99;
+  background-color: #D9D3CC;
+
 }
 
 .finished:hover {
-  background-color: #889c7b;
+  background-color: #b6b1ab
 }
 
 .bookRmvBtn{
