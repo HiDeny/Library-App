@@ -10,7 +10,10 @@ let myLibrary = [];
 
 let localLibJson = localStorage.getItem('library');
 if (localLibJson) {
-	myLibrary = Array.from(JSON.parse(localLibJson));
+	let myLibraryObj = Array.from(JSON.parse(localLibJson));
+	for (let book in myLibraryObj) {
+		myLibrary.push(myLibraryObj[book]);
+	}
 } else {
 	myLibrary = [];
 }
@@ -230,7 +233,7 @@ function addBookElement(book) {
 	bookCardElement.appendChild(bookPages);
 	// Read
 	const bookReadBtn = document.createElement('button');
-	bookReadBtn.setAttribute('class', 'readBtn');
+	bookReadBtn.setAttribute('class', `readBtn ${book.id}`);
 	let bookRead = book.read;
 	if (book.read) {
 		bookReadBtn.classList.add('finished');
@@ -247,16 +250,13 @@ function addBookElement(book) {
 		bookReadBtn.classList.toggle('finished');
 		bookRead = revertRead;
 		book.read = bookRead;
-		console.log(book.id);
-		console.log(e.target);
-		for (let book in myLibrary) {}
-		// currentBook = myLibrary[book.id];
-		// currentBook.read = revertRead;
+		let readStatus = myLibrary.find(book => book.id === e.target.classList[1]);
+		console.log(readStatus);
 		localStorage.removeItem('library');
 		let jsonLibrary = JSON.stringify(myLibrary);
 		localStorage.setItem('library', jsonLibrary);
-		// console.log(localStorage);
-		// console.log(myLibrary);
+		console.log(localStorage);
+		console.log(myLibrary);
 		
 	});
 
@@ -326,11 +326,10 @@ createElementsFromLibrary();
 // LOCAL STORAGE
 
 function createElementsFromLibrary() {
-	const str = localStorage.getItem('library');
-	const parsedLib = JSON.parse(str);
-	console.log(parsedLib);
-	for (let book in parsedLib) {
-		addBookElement(parsedLib[book]);
+	
+	// console.log(parsedLib);
+	for (let book in myLibrary) {
+		addBookElement(myLibrary[book]);
 		bookShelve.appendChild(bookElements[book]);
 	}
 }
