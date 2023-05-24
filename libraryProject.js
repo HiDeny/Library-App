@@ -6,26 +6,35 @@
 //* Connect functions to DOM
 
 // TODO Store Books
-let myLibrary = [];
-
-let localLibJson = localStorage.getItem('library');
-if (localLibJson) {
-	let myLibraryObj = Array.from(JSON.parse(localLibJson));
-	for (let book in myLibraryObj) {
-		myLibrary.push(myLibraryObj[book]);
-	}
-} else {
-	myLibrary = [];
-}
-
-// TODO Book Creation
 let localId = localStorage.getItem('id');
 if (localId) {
 	id = localId;
 } else {
 	id = 0;
 }
+let myLibrary = [];
 
+let localLibJson = localStorage.getItem('library');
+if (localLibJson) {
+	let myLibraryObj = Array.from(JSON.parse(localLibJson));
+	for (let book in myLibraryObj) {
+		let currentBook = myLibraryObj[book];
+		console.log(currentBook);
+		myLibrary.push(
+			new Book(
+				currentBook.title,
+				currentBook.author,
+				currentBook.description,
+				currentBook.pages,
+				currentBook.read
+			)
+		);
+	}
+} else {
+	myLibrary = [];
+}
+
+// TODO Book Creation
 function Book(title, author, description = '', pages, read = false) {
 	this.title = title;
 	this.author = author;
@@ -34,6 +43,10 @@ function Book(title, author, description = '', pages, read = false) {
 	this.read = read;
 	this.id = id++;
 }
+
+Book.prototype.changeRead = function () {
+	this.read = !this.read;
+};
 
 // TODO Add Book
 // Button on top of the page
@@ -68,7 +81,7 @@ function addBookForm() {
 			newBookRead
 		);
 		// Add new Book element
-		localStorage.removeItem('library')
+		localStorage.removeItem('library');
 		myLibrary.push(wholeNewBook);
 		const newBookElement = addBookElement(wholeNewBook);
 		let jsonLibrary = JSON.stringify(myLibrary);
@@ -78,8 +91,6 @@ function addBookForm() {
 		// Remove form after adding
 		formOverlay.remove();
 	});
-
-
 
 	//* Submit button
 	const submitBtn = document.createElement('button');
@@ -249,15 +260,10 @@ function addBookElement(book) {
 		}`;
 		bookReadBtn.classList.toggle('finished');
 		bookRead = revertRead;
-		book.read = bookRead;
-		let readStatus = myLibrary.find(book => book.id === e.target.classList[1]);
-		console.log(readStatus);
+		book.changeRead();
 		localStorage.removeItem('library');
 		let jsonLibrary = JSON.stringify(myLibrary);
 		localStorage.setItem('library', jsonLibrary);
-		console.log(localStorage);
-		console.log(myLibrary);
-		
 	});
 
 	bookCardElement.appendChild(bookReadBtn);
@@ -273,7 +279,7 @@ function addBookElement(book) {
 		document.getElementById(book.id).remove();
 		localStorage.removeItem('library');
 		let jsonLibrary = JSON.stringify(myLibrary);
-		localStorage.setItem('library', jsonLibrary);		
+		localStorage.setItem('library', jsonLibrary);
 	});
 
 	bookCardElement.appendChild(bookRemoveBtn);
@@ -318,15 +324,11 @@ headerEle.appendChild(addBookBtn);
 // );
 // myLibrary.push(new Book('The Lord Of The Rings', 'J.R.R. Tolkien', '', 1216, true));
 
-
-
 createElementsFromLibrary();
-
 
 // LOCAL STORAGE
 
 function createElementsFromLibrary() {
-	
 	// console.log(parsedLib);
 	for (let book in myLibrary) {
 		addBookElement(myLibrary[book]);
