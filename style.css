@@ -391,8 +391,6 @@ header {
 
 }
 
-
-
 #addBookBtn{
     border-radius: 100%;
     background-image: url("./imgs/file_add_button_plus_icon_233427.png");
@@ -405,12 +403,6 @@ header {
 
 #addBookBtn:active {
   background-color: rgb(213, 213, 213);
-}
-
-
-/* MAIN */
-#main {
-
 }
 
 /* BOOKS */
@@ -472,6 +464,8 @@ header {
   top: 25px;
   border: 0px;
   background-color: transparent;
+  font-size: 20px;
+  font-family: helvetica;
 }
 
 .bookHeader {
@@ -577,17 +571,6 @@ header {
   background-color: transparent;
 }
 
-/* INPUTS */
-#title{}
-#author{}
-#pages{}
-#read{}
-
-form{}
-ul{}
-li{}
-label{}
-
 input{
  width: 90%;
  border: 0px;
@@ -613,10 +596,4 @@ textarea {
   min-height: 100px;
   background-color: rgb(236, 226, 212);
 }
-
-
-
-
-
-/* CHANGRS TO MAKE */
 

@@ -1,10 +1,3 @@
-//* Variables
-//* Functions
-//* Algorithms
-//* DOM Elements
-//* Append DOM Elements
-//* Connect functions to DOM
-
 // TODO Book Creation
 class Book {
 	constructor(title, author, description = '', pages, read = false, id) {
@@ -20,45 +13,44 @@ class Book {
 
 	changeRead() {
 		this.read = !this.read;
-        return this.read;
+		return this.read;
 	}
 }
 
 // TODO Store Books
 class Library {
-    //Id setup
-    localId = localStorage.getItem('id');
+	//Id setup
+	localId = localStorage.getItem('id');
 
 	id = this.localId ? this.localId : 0;
 
 	// Setup of the Library
 	myLibrary = [];
 
-    librarySetup = () => {
-        // Get items from storage
-        const localLibJson = localStorage.getItem('library');
+	librarySetup = () => {
+		// Get items from storage
+		const localLibJson = localStorage.getItem('library');
 
-	    if(localLibJson.length > 2) {
-		let libObj = Array.from(JSON.parse(localLibJson));
-		for (let book in libObj) {
-			let activeBook = libObj[book];
-			    this.myLibrary.push(
-				    new Book(
-					    activeBook.title,
-					    activeBook.author,
-					    activeBook.description,
-					    activeBook.pages,
-					    activeBook.read
-				    )
-		    	);
-		    }
-	    } else {
-            this.myLibrary = [];
-            this.id = 0;
-            localStorage.setItem('id', this.id);
-        }
-    }
-
+		if (localLibJson.length > 2) {
+			let libObj = Array.from(JSON.parse(localLibJson));
+			for (let book in libObj) {
+				let activeBook = libObj[book];
+				this.myLibrary.push(
+					new Book(
+						activeBook.title,
+						activeBook.author,
+						activeBook.description,
+						activeBook.pages,
+						activeBook.read
+					)
+				);
+			}
+		} else {
+			this.myLibrary = [];
+			this.id = 0;
+			localStorage.setItem('id', this.id);
+		}
+	};
 
 	// TODO Add Book function
 	addBookForm = () => {
@@ -84,10 +76,10 @@ class Library {
 				newBookData.description,
 				newBookData.pages,
 				newBookData.read,
-                this.id
+				this.id
 			);
+			this.id++;
 
-            this.id++;
 			// Add new Book element
 			this.myLibrary.push(wholeNewBook);
 			const newBookElement = this.createBookElement(wholeNewBook);
@@ -112,8 +104,7 @@ class Library {
 		cancelBtn.innerText = 'x';
 		cancelBtn.addEventListener('click', (e) => {
 			e.preventDefault();
-			// formOverlay.remove();
-			this.remove();
+			formOverlay.remove();
 		});
 
 		//* Form Title
@@ -132,7 +123,6 @@ class Library {
 		inputTitle.setAttribute('type', 'text');
 		inputTitle.setAttribute('id', 'title');
 		inputTitle.setAttribute('name', 'title');
-		inputTitle.setAttribute('autofocus', true);
 		inputTitle.setAttribute('placeholder', 'Title');
 		inputTitle.toggleAttribute('required');
 		// Append
@@ -210,7 +200,6 @@ class Library {
 
 		return formOverlay;
 	};
-	
 
 	// Create book element for display
 	createBookElement = (book) => {
@@ -290,27 +279,14 @@ class Library {
 		return bookCardElement;
 	};
 
-
-    // TODO Display Books
-    displayBooks = () => {
-        for (let book in this.myLibrary) {
-            let bookToAdd = this.createBookElement(this.myLibrary[book]);
-            bookShelve.appendChild(bookToAdd);
-        }
-    }
+	// TODO Display Books
+	displayBooks = () => {
+		for (let book in this.myLibrary) {
+			let bookToAdd = this.createBookElement(this.myLibrary[book]);
+			bookShelve.appendChild(bookToAdd);
+		}
+	};
 }
-
-
-
-
-
-
-// Add book button
-const addBookBtn = document.createElement('button');
-addBookBtn.setAttribute('id', 'addBookBtn');
-addBookBtn.addEventListener('click', () => {
-	bodyDiv.insertBefore(lib1.addBookForm(), bodyDiv.firstChild);
-});
 
 // DOM Elements
 const bodyDiv = document.querySelector('body');
@@ -318,9 +294,16 @@ const mainDiv = document.querySelector('#main');
 const headerEle = document.querySelector('header');
 const bookShelve = document.querySelector('.bookShelve');
 
+// Add book button
+const addBookBtn = document.createElement('button');
+addBookBtn.setAttribute('id', 'addBookBtn');
+addBookBtn.addEventListener('click', () => {
+	bodyDiv.appendChild(activeLib.addBookForm());
+	document.getElementById('title').focus();
+});
 headerEle.appendChild(addBookBtn);
 
-// First run
-const lib1 = new Library;
-lib1.librarySetup();
-lib1.displayBooks();
+// initial run
+const activeLib = new Library();
+activeLib.librarySetup();
+activeLib.displayBooks();
