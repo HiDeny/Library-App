@@ -1,10 +1,3 @@
-//* Variables
-//* Functions
-//* Algorithms
-//* DOM Elements
-//* Append DOM Elements
-//* Connect functions to DOM
-
 // TODO Store Books
 let localId = localStorage.getItem('id');
 if (localId) {
@@ -19,7 +12,6 @@ if (localLibJson) {
 	let myLibraryObj = Array.from(JSON.parse(localLibJson));
 	for (let book in myLibraryObj) {
 		let currentBook = myLibraryObj[book];
-		console.log(currentBook);
 		myLibrary.push(
 			new Book(
 				currentBook.title,
@@ -204,7 +196,6 @@ function addBookForm() {
 }
 
 // TODO Display Books
-let bookElements = [];
 //Create Elements
 function addBookElement(book) {
 	// Card
@@ -283,8 +274,7 @@ function addBookElement(book) {
 	});
 
 	bookCardElement.appendChild(bookRemoveBtn);
-	// Push to Arr
-	bookElements.push(bookCardElement);
+
 	return bookCardElement;
 }
 
@@ -331,7 +321,7 @@ createElementsFromLibrary();
 function createElementsFromLibrary() {
 	// console.log(parsedLib);
 	for (let book in myLibrary) {
-		addBookElement(myLibrary[book]);
-		bookShelve.appendChild(bookElements[book]);
+		let bookToAdd = addBookElement(myLibrary[book]);
+		bookShelve.appendChild(bookToAdd);
 	}
 }
