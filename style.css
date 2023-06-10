@@ -405,6 +405,11 @@ header {
   background-color: rgb(213, 213, 213);
 }
 
+#addBookBtn:hover {
+  cursor: pointer;
+  background-color: #ffffff;
+}
+
 /* BOOKS */
 .bookShelve {
     padding: 50px;
