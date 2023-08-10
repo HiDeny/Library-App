@@ -1,0 +1,25 @@
+{
+  "name": "project_library",
+  "version": "1.0.0",
+  "description": "The odin project, Library app, allows you to add books you want to read or you read already",
+  "main": "libraryProject.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HiDeny/Library-App.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HiDeny/Library-App/issues"
+  },
+  "homepage": "https://github.com/HiDeny/Library-App#readme",
+  "devDependencies": {
+    "eslint": "^8.46.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.0"
+  }
+}
