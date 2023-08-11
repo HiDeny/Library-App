@@ -7,9 +7,9 @@ function incrementAndStoreId() {
 }
 
 // TODO Book Creation
-export default class Book {
+export default class BookCore {
   constructor({ title, author, description, pages, read }) {
-    this.bookId = incrementAndStoreId();
+    this.id = incrementAndStoreId();
     this.title = title;
     this.author = author;
     this.title = title;
