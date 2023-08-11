@@ -32,7 +32,8 @@ function createPages(book) {
 
 function createRead() {
   const read = document.createElement('button');
-  read.classList.add('cardRread');
+  read.classList.add('cardReadBtn');
+  read.textContent = 'Read!';
 
   return read;
 }
@@ -48,7 +49,7 @@ function createRemoveBtn() {
 function createCard(book) {
   const card = document.createElement('div');
   card.setAttribute('id', `${book.id}`);
-  card.classList.add(`bookCard`);
+  card.classList.add('bookCard');
 
   return card;
 }
@@ -76,14 +77,3 @@ export default function createBookElement(book) {
 
   return card;
 }
-
-const test = createBookElement({
-  id: 0,
-  title: '',
-  author: '',
-  description: '',
-  pages: 20,
-  read: true,
-});
-
-console.log(test);

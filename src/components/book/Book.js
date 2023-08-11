@@ -1,15 +1,15 @@
-let id = parseInt(localStorage.getItem('todoId'), 10) || 0;
-console.log(id);
+let bookId = parseInt(localStorage.getItem('todoId'), 10) || 0;
 
 function incrementAndStoreId() {
-  id += 1;
-  localStorage.setItem('bookId', id.toString());
+  bookId += 1;
+  localStorage.setItem('bookId', bookId.toString());
 }
 
 // TODO Book Creation
-export default class BookCore {
+export default class Book {
   constructor({ title, author, description, pages, read }) {
-    this.id = incrementAndStoreId();
+    this.id = bookId;
+    incrementAndStoreId();
     this.title = title;
     this.author = author;
     this.title = title;

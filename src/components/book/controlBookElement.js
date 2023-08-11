@@ -1,72 +1,78 @@
-if (book.read) {
-    bookReadBtn.classList.add('finished');
-    bookReadBtn.textContent = 'Finished!';
-  } else {
-    bookReadBtn.textContent = "Let's read!";
-  }
-  // TODO Change Read status
-  bookReadBtn.addEventListener('click', () => {
-    bookRead = book.changeRead();
-    bookReadBtn.textContent = `${
-      bookRead === true ? 'Finished!' : "Let's read!"
-    }`;
-    bookReadBtn.classList.toggle('finished');
-    let jsonLibrary = JSON.stringify(this.myLibrary);
-    localStorage.setItem('library', jsonLibrary);
-  });
-  
-  bookCardElement.appendChild(bookReadBtn);
+export default function controlBookElement() {}
 
-  // TODO Remove Book
+// if (book.read) {
+//   bookReadBtn.classList.add('finished');
+//   bookReadBtn.textContent = 'Finished!';
+// } else {
+//   bookReadBtn.textContent = "Let's read!";
+// }
+// // TODO Change Read status
+// bookReadBtn.addEventListener('click', () => {
+//   bookRead = book.changeRead();
+//   bookReadBtn.textContent = `${
+//     bookRead === true ? 'Finished!' : "Let's read!"
+//   }`;
+//   bookReadBtn.classList.toggle('finished');
+//   let jsonLibrary = JSON.stringify(this.myLibrary);
+//   localStorage.setItem('library', jsonLibrary);
+// });
 
-bookRemoveBtn.addEventListener('click', () => {
-    // Delete from Array
-    this.myLibrary.splice(this.myLibrary.indexOf(book), 1);
-    // Remove from DOM
-    document.getElementById(book.id).remove();
-    let jsonLibrary = JSON.stringify(this.myLibrary);
-    localStorage.setItem('library', jsonLibrary);
-  });
+// bookCardElement.appendChild(bookReadBtn);
 
-  initForm = () => {
-    // Create book element for display
+// // TODO Remove Book
 
-    const bookReadBtn = document.createElement('button');
-    bookReadBtn.setAttribute('class', `readBtn ${book.id}`);
-    let bookRead = book.read;
-    if (book.read) {
-      bookReadBtn.classList.add('finished');
-      bookReadBtn.textContent = 'Finished!';
-    } else {
-      bookReadBtn.textContent = "Let's read!";
-    }
-    // TODO Change Read status
-    bookReadBtn.addEventListener('click', () => {
-      bookRead = book.changeRead();
-      bookReadBtn.textContent = `${
-        bookRead === true ? 'Finished!' : "Let's read!"
-      }`;
-      bookReadBtn.classList.toggle('finished');
-      let jsonLibrary = JSON.stringify(this.myLibrary);
-      localStorage.setItem('library', jsonLibrary);
-    });
+// bookRemoveBtn.addEventListener('click', () => {
+//   // Delete from Array
+//   this.myLibrary.splice(this.myLibrary.indexOf(book), 1);
+//   // Remove from DOM
+//   document.getElementById(book.id).remove();
+//   let jsonLibrary = JSON.stringify(this.myLibrary);
+//   localStorage.setItem('library', jsonLibrary);
+// });
 
-    bookCardElement.appendChild(bookReadBtn);
+// initForm = () => {
+//   // Create book element for display
 
-    // TODO Remove Book
-    const bookRemoveBtn = document.createElement('button');
-    bookRemoveBtn.setAttribute('class', 'bookRmvBtn');
-    bookRemoveBtn.textContent += 'x';
-    bookRemoveBtn.addEventListener('click', () => {
-      // Delete from Array
-      this.myLibrary.splice(this.myLibrary.indexOf(book), 1);
-      // Remove from DOM
-      document.getElementById(book.id).remove();
-      let jsonLibrary = JSON.stringify(this.myLibrary);
-      localStorage.setItem('library', jsonLibrary);
-    });
+//   const bookReadBtn = document.createElement('button');
+//   bookReadBtn.setAttribute('class', `readBtn ${book.id}`);
+//   let bookRead = book.read;
+//   if (book.read) {
+//     bookReadBtn.classList.add('finished');
+//     bookReadBtn.textContent = 'Finished!';
+//   } else {
+//     bookReadBtn.textContent = "Let's read!";
+//   }
+//   // TODO Change Read status
+//   bookReadBtn.addEventListener('click', () => {
+//     bookRead = book.changeRead();
+//     bookReadBtn.textContent = `${
+//       bookRead === true ? 'Finished!' : "Let's read!"
+//     }`;
+//     bookReadBtn.classList.toggle('finished');
+//     let jsonLibrary = JSON.stringify(this.myLibrary);
+//     localStorage.setItem('library', jsonLibrary);
+//   });
 
-    bookCardElement.appendChild(bookRemoveBtn);
+//   bookCardElement.appendChild(bookReadBtn);
 
-    return bookCardElement;
-  };
+//   // TODO Remove Book
+//   const bookRemoveBtn = document.createElement('button');
+//   bookRemoveBtn.setAttribute('class', 'bookRmvBtn');
+//   bookRemoveBtn.textContent += 'x';
+//   bookRemoveBtn.addEventListener('click', () => {
+//     // Delete from Array
+//     this.myLibrary.splice(this.myLibrary.indexOf(book), 1);
+//     // Remove from DOM
+//     document.getElementById(book.id).remove();
+//     let jsonLibrary = JSON.stringify(this.myLibrary);
+//     localStorage.setItem('library', jsonLibrary);
+//   });
+
+//   bookCardElement.appendChild(bookRemoveBtn);
+
+//   return bookCardElement;
+// };
+
+// function removeForm() {
+//   formBackground.remove();
+// }

@@ -1,16 +1,18 @@
 function createSubmitBtn() {
   const submitBtn = document.createElement('button');
   submitBtn.setAttribute('type', 'submit');
-  submitBtn.setAttribute('class', 'submitBtn');
+  submitBtn.classList.add('submitBtn');
   submitBtn.innerText = 'Add!';
   return submitBtn;
 }
 
 function createCancelBtn() {
   const cancelBtn = document.createElement('button');
-  cancelBtn.setAttribute('class', 'cancelBtn');
+  cancelBtn.classList.add('cancelFormBtn');
   cancelBtn.innerText = 'x';
   // cancelBtn.onclick = removeForm;
+
+  return cancelBtn;
 }
 
 function createLabel(name) {
@@ -21,6 +23,7 @@ function createLabel(name) {
 
 function createFormTitle() {
   const formTitle = document.createElement('h3');
+  formTitle.classList.add('formTitle');
   formTitle.textContent = 'New Book';
 
   return formTitle;
@@ -30,7 +33,7 @@ function getTitle() {
 
   const title = document.createElement('input');
   title.setAttribute('type', 'text');
-  title.setAttribute('id', 'title');
+  title.setAttribute('id', 'titleForm');
   title.setAttribute('name', 'title');
   title.setAttribute('placeholder', 'Title');
   title.required = true;
@@ -45,11 +48,11 @@ function getAuthor() {
 
   const author = document.createElement('input');
   author.setAttribute('type', 'text');
-  author.setAttribute('id', 'author');
+  author.setAttribute('id', 'authorForm');
   author.setAttribute('name', 'author');
   author.setAttribute('placeholder', 'Author');
 
-  author.append(author);
+  label.append(author);
 
   return label;
 }
@@ -58,7 +61,7 @@ function getDescription() {
   const label = createLabel('description');
 
   const description = document.createElement('textarea');
-  description.setAttribute('id', 'description');
+  description.setAttribute('id', 'descriptionForm');
   description.setAttribute('name', 'description');
   description.setAttribute('placeholder', 'Description');
 
@@ -73,7 +76,7 @@ function getPages() {
   const pages = document.createElement('input');
   pages.setAttribute('type', 'number');
   pages.setAttribute('min', '1');
-  pages.setAttribute('id', 'pages');
+  pages.setAttribute('id', 'pagesForm');
   pages.setAttribute('name', 'pages');
   pages.setAttribute('placeholder', 'Pages');
 
@@ -88,7 +91,7 @@ function getRead() {
 
   const read = document.createElement('input');
   read.setAttribute('type', 'checkbox');
-  read.setAttribute('id', 'read');
+  read.setAttribute('id', 'readForm');
   read.setAttribute('name', 'read');
 
   label.append(read);
@@ -118,10 +121,20 @@ function getBookInfo() {
   return bookInfo;
 }
 
-export default function createForm() {
+function createBackground() {
+  const background = document.createElement('div');
+  background.className = 'formBackground';
+
+  return background;
+}
+
+export default function createForm(returnData) {
+  const background = createBackground();
+
   const bookForm = document.createElement('form');
   bookForm.setAttribute('id', 'bookForm');
   bookForm.setAttribute('class', 'bookForm');
+  background.append(bookForm);
 
   const formTitle = createFormTitle();
   bookForm.append(formTitle);
@@ -135,7 +148,17 @@ export default function createForm() {
   const submitBtn = createSubmitBtn();
   bookForm.append(submitBtn);
 
-  console.log(bookForm);
+  bookForm.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-  return bookForm;
+    const data = new FormData(event.target);
+    const bookData = Object.fromEntries(data.entries());
+    returnData(bookData);
+
+    background.remove();
+  });
+
+  return background;
 }
+
+// Get data
