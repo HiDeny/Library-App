@@ -1,4 +1,5 @@
 import MemoryController from '../../memory/localStorage.js';
+import BookShelf from '../bookShelf/bookShelf.js';
 
 const updateStatusClass = (isFinished, statusBtn) => {
   if (isFinished) statusBtn.classList.add('finished');
@@ -10,7 +11,7 @@ const updateStatusText = (isFinished) => {
   return newTextContent;
 };
 
-function handleClickStatusBtn(book, statusBtn) {
+const handleClickStatusBtn = (book, statusBtn) => {
   book.toggleFinished();
 
   const isFinished = book.finished;
@@ -20,36 +21,29 @@ function handleClickStatusBtn(book, statusBtn) {
   updatedStatusBtn.textContent = updateStatusText(isFinished);
 
   MemoryController.uploadBook(book);
+};
+
+function handleClickRemoveBtn(book, card) {
+  card.classList.add('toDelete');
+  BookShelf.removeBook(book);
+  MemoryController.deleteBook(book);
+  setTimeout(() => {
+    card.remove();
+  }, 1300);
 }
 
-export default function controlBookElement(book, statusBtn, removeBtn) {
+export default function controlBookElement(
+  book,
+  { card, statusBtn, removeBtn }
+) {
   statusBtn.addEventListener('click', () => {
     handleClickStatusBtn(book, statusBtn);
   });
 
   removeBtn.addEventListener('click', () => {
-    handleClickStatusBtn(book, statusBtn);
+    handleClickRemoveBtn(book, card);
   });
 }
-
-// if (book.read) {
-//   bookReadBtn.classList.add('finished');
-//   bookReadBtn.textContent = 'Finished!';
-// } else {
-//   bookReadBtn.textContent = "Let's read!";
-// }
-// // TODO Change Read status
-// bookReadBtn.addEventListener('click', () => {
-//   bookRead = book.changeRead();
-//   bookReadBtn.textContent = `${
-//     bookRead === true ? 'Finished!' : "Let's read!"
-//   }`;
-//   bookReadBtn.classList.toggle('finished');
-//   let jsonLibrary = JSON.stringify(this.myLibrary);
-//   localStorage.setItem('library', jsonLibrary);
-// });
-
-// bookCardElement.appendChild(bookReadBtn);
 
 // // TODO Remove Book
 
@@ -61,31 +55,6 @@ export default function controlBookElement(book, statusBtn, removeBtn) {
 //   let jsonLibrary = JSON.stringify(this.myLibrary);
 //   localStorage.setItem('library', jsonLibrary);
 // });
-
-// initForm = () => {
-//   // Create book element for display
-
-//   const bookReadBtn = document.createElement('button');
-//   bookReadBtn.setAttribute('class', `readBtn ${book.id}`);
-//   let bookRead = book.read;
-//   if (book.read) {
-//     bookReadBtn.classList.add('finished');
-//     bookReadBtn.textContent = 'Finished!';
-//   } else {
-//     bookReadBtn.textContent = "Let's read!";
-//   }
-//   // TODO Change Read status
-//   bookReadBtn.addEventListener('click', () => {
-//     bookRead = book.changeRead();
-//     bookReadBtn.textContent = `${
-//       bookRead === true ? 'Finished!' : "Let's read!"
-//     }`;
-//     bookReadBtn.classList.toggle('finished');
-//     let jsonLibrary = JSON.stringify(this.myLibrary);
-//     localStorage.setItem('library', jsonLibrary);
-//   });
-
-//   bookCardElement.appendChild(bookReadBtn);
 
 //   // TODO Remove Book
 //   const bookRemoveBtn = document.createElement('button');

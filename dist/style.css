@@ -30,11 +30,15 @@
     serif;
 }
 
+body {
+  height: 100vh;
+  background-color: #f2f2f2;
+}
+
 /* HEADER */
 header {
   text-align: center;
   padding: 30px;
-  background-color: #f2f2f2;
 }
 
 .logo {
@@ -72,7 +76,6 @@ header {
   grid-auto-rows: 469px;
   gap: 75px;
   justify-content: center;
-  background-color: #f2f2f2;
 }
 
 /* Card */
@@ -88,6 +91,7 @@ header {
   box-shadow: 0px 10px 20px 5px rgb(162, 162, 162);
   border: 0.5px solid black;
   background-color: white;
+  transition: all 1s;
 }
 
 /* book */
@@ -153,6 +157,10 @@ header {
 
 .finished:hover {
   background-color: #b6b1ab;
+}
+
+.toDelete {
+  opacity: 0;
 }
 
 /* FORM */

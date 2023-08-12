@@ -1,4 +1,4 @@
-let bookId = parseInt(localStorage.getItem('todoId'), 10) || 0;
+let bookId = parseInt(localStorage.getItem('bookId'), 10) || 0;
 
 function incrementAndStoreId() {
   bookId += 1;
@@ -7,9 +7,9 @@ function incrementAndStoreId() {
 
 // TODO Book Creation
 export default class Book {
-  constructor({ title, author, description, pages, finished }) {
-    this.id = bookId;
-    incrementAndStoreId();
+  constructor({ id, title, author, description, pages, finished }) {
+    this.id = id !== undefined ? id : bookId;
+    if (id === undefined) incrementAndStoreId();
     this.title = title;
     this.author = author;
     this.title = title;

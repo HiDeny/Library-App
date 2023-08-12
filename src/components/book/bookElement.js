@@ -1,5 +1,3 @@
-import controlBookElement from './controlBookElement.js';
-
 function createTitle(book) {
   const title = document.createElement('h2');
   title.classList.add('cardTitle');
@@ -78,7 +76,5 @@ export default function createBookElement(book) {
   const removeBtn = createRemoveBtn();
   card.append(removeBtn);
 
-  controlBookElement(book, statusBtn, removeBtn);
-
-  return card;
+  return { card, statusBtn, removeBtn };
 }
