@@ -70,28 +70,34 @@ header {
 
 /* BOOKS */
 .bookShelfDisplay {
-  padding: 50px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 300px);
-  grid-auto-rows: 469px;
+  grid-auto-rows: 30rem;
+  grid-template-columns: repeat(auto-fit, 18.75rem);
   gap: 75px;
-  justify-content: center;
+
+  min-height: 30rem;
+
+  padding: 50px;
 }
 
 /* Card */
 .bookCard {
-  display: grid;
   position: relative;
-  grid-template-rows: 2fr 3fr 1fr 1fr;
+
+  display: grid;
+  grid-template-rows: 5rem 3rem auto 2.5rem 4rem;
   border-radius: 20px;
-  padding: 10px;
+  padding: 10px 20px;
+
+  background-color: white;
   background-image: url('./imgs/bookCover.jpg');
   background-repeat: no-repeat;
   background-size: contain;
-  box-shadow: 0px 10px 20px 5px rgb(162, 162, 162);
+
   border: 0.5px solid black;
-  background-color: white;
-  transition: all 1s;
+  box-shadow: 0px 10px 20px 5px rgb(162, 162, 162);
+
+  transition: opacity ease-out 500ms;
 }
 
 /* book */
@@ -106,14 +112,22 @@ header {
 }
 
 .cardTitle {
+  align-self: center;
+  justify-self: center;
+
   font-family: 'Candara';
-  margin: 40px 30px 0px;
+  font-size: 1.5rem;
+
+  margin: 0;
 }
 
 .cardAuthor {
-  font-size: 14px;
-  font-weight: 100;
-  margin-top: 10px;
+  justify-self: center;
+  align-self: center;
+
+  font-size: 0.9rem;
+
+  margin: 0;
 }
 
 .cardDescription {
@@ -125,26 +139,29 @@ header {
 }
 
 .cardPages {
-  display: flex;
-  text-align: center;
-  font-style: italic;
-  font-weight: 200;
-  font-size: 14px;
-  margin-bottom: 5px;
-  align-items: end;
-  justify-content: center;
+  justify-self: center;
+  align-self: center;
+
+  margin: 0;
+
+  font-size: 0.8rem;
 }
 
 .cardStatusBtn {
-  font-family: 'Caveat';
-  font-weight: 700;
-  border-radius: 20px;
-  width: 230px;
-  position: relative;
-  border: 0px;
-  margin: 0 10px;
-  left: 12px;
+  justify-self: center;
+  align-self: center;
+
+  height: 3rem;
+  width: 13rem;
   background-color: #a9bf99;
+  border: 0px;
+  border-radius: 20px;
+
+  font-family: 'Caveat';
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+
+  transition: background-color 500ms;
 }
 
 .cardStatusBtn:hover {
@@ -243,3 +260,5 @@ textarea {
   min-height: 100px;
   background-color: rgb(236, 226, 212);
 }
+
+/* style.css | http://localhost:5501/dist/style.css */
