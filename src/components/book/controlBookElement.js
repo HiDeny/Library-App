@@ -12,13 +12,12 @@ const updateStatusText = (isFinished) => {
 };
 
 const handleClickStatusBtn = (book, statusBtn) => {
-  book.toggleFinished();
-
-  const isFinished = book.finished;
   const updatedStatusBtn = statusBtn;
 
-  updateStatusClass(isFinished, updatedStatusBtn);
-  updatedStatusBtn.textContent = updateStatusText(isFinished);
+  book.toggleFinished();
+
+  updateStatusClass(book.finished, updatedStatusBtn);
+  updatedStatusBtn.textContent = updateStatusText(book.finished);
 
   MemoryController.uploadBook(book);
 };
@@ -29,13 +28,10 @@ function handleClickRemoveBtn(book, card) {
   MemoryController.deleteBook(book);
   setTimeout(() => {
     card.remove();
-  }, 1300);
+  }, 1000);
 }
 
-export default function controlBookElement(
-  book,
-  { card, statusBtn, removeBtn }
-) {
+export default function controlBookElement(book, card, statusBtn, removeBtn) {
   statusBtn.addEventListener('click', () => {
     handleClickStatusBtn(book, statusBtn);
   });
@@ -44,36 +40,3 @@ export default function controlBookElement(
     handleClickRemoveBtn(book, card);
   });
 }
-
-// // TODO Remove Book
-
-// bookRemoveBtn.addEventListener('click', () => {
-//   // Delete from Array
-//   this.myLibrary.splice(this.myLibrary.indexOf(book), 1);
-//   // Remove from DOM
-//   document.getElementById(book.id).remove();
-//   let jsonLibrary = JSON.stringify(this.myLibrary);
-//   localStorage.setItem('library', jsonLibrary);
-// });
-
-//   // TODO Remove Book
-//   const bookRemoveBtn = document.createElement('button');
-//   bookRemoveBtn.setAttribute('class', 'bookRmvBtn');
-//   bookRemoveBtn.textContent += 'x';
-//   bookRemoveBtn.addEventListener('click', () => {
-//     // Delete from Array
-//     this.myLibrary.splice(this.myLibrary.indexOf(book), 1);
-//     // Remove from DOM
-//     document.getElementById(book.id).remove();
-//     let jsonLibrary = JSON.stringify(this.myLibrary);
-//     localStorage.setItem('library', jsonLibrary);
-//   });
-
-//   bookCardElement.appendChild(bookRemoveBtn);
-
-//   return bookCardElement;
-// };
-
-// function removeForm() {
-//   formBackground.remove();
-// }

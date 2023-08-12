@@ -3,7 +3,7 @@ const bookShelfDisplay = document.querySelector('.bookShelfDisplay');
 // TODO Display Books
 export default class ScreenController {
   static displayForm(form) {
-    bookShelfDisplay.append(form);
+    document.body.appendChild(form);
     document.getElementById('titleForm').focus();
   }
 

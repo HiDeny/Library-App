@@ -55,7 +55,7 @@ function createCard(book) {
   return card;
 }
 
-export default function createBookElement(book) {
+export default function createBookElement(book, bookController) {
   const card = createCard(book);
 
   const title = createTitle(book);
@@ -76,5 +76,7 @@ export default function createBookElement(book) {
   const removeBtn = createRemoveBtn();
   card.append(removeBtn);
 
-  return { card, statusBtn, removeBtn };
+  bookController(book, card, statusBtn, removeBtn);
+
+  return card;
 }

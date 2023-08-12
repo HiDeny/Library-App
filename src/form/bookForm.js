@@ -10,7 +10,6 @@ function createCancelBtn() {
   const cancelBtn = document.createElement('button');
   cancelBtn.classList.add('cancelFormBtn');
   cancelBtn.innerText = 'x';
-  // cancelBtn.onclick = removeForm;
 
   return cancelBtn;
 }
@@ -128,7 +127,7 @@ function createBackground() {
   return background;
 }
 
-export default function createForm(returnData) {
+export default function createFormElement(formController, useData) {
   const background = createBackground();
 
   const bookForm = document.createElement('form');
@@ -148,15 +147,7 @@ export default function createForm(returnData) {
   const submitBtn = createSubmitBtn();
   bookForm.append(submitBtn);
 
-  bookForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const data = new FormData(event.target);
-    const bookData = Object.fromEntries(data.entries());
-    returnData(bookData);
-
-    background.remove();
-  });
+  formController(useData, background, bookForm, cancelBtn);
 
   return background;
 }

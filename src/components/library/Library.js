@@ -1,4 +1,5 @@
 import createForm from '../../form/bookForm.js';
+import controlFormElement from '../../form/controlForm.js';
 
 import BookShelf from '../bookShelf/bookShelf.js';
 
@@ -10,20 +11,20 @@ import MemoryController from '../../memory/localStorage.js';
 import ScreenController from '../../screen/screenController.js';
 
 const displayBook = (book) => {
-  const bookElement = createBookElement(book);
-  controlBookElement(book, bookElement);
-  ScreenController.displayBookCard(bookElement.card);
+  const completeCard = createBookElement(book, controlBookElement);
+  ScreenController.displayBookCard(completeCard);
 };
 
 const createBook = () => {
   const useData = (bookData) => {
     const newBook = new Book(bookData);
-
+    displayBook(newBook);
     BookShelf.addBook(newBook);
     MemoryController.uploadBook(newBook);
-    displayBook(newBook);
   };
-  ScreenController.displayForm(createForm(useData));
+
+  const completeForm = createForm(controlFormElement, useData);
+  ScreenController.displayForm(completeForm);
 };
 
 const addBookBtn = document.getElementById('addBookBtn');
