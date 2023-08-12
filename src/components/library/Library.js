@@ -4,56 +4,54 @@ import Book from '../book/Book.js';
 import MemoryController from '../../memory/localStorage.js';
 import ScreenController from '../../screen/screenController.js';
 
-function initBookShelve() {
-  const shelveObj = MemoryController.downloadBookShelve();
-  const shelveObjValues = Object.values(shelveObj);
-
-  return shelveObjValues.map((book) => new Book(book));
+function initBookShelf() {
+  const getBooks = MemoryController.downloadStoredBooks();
+  return getBooks.map((book) => new Book(book));
 }
 
 // TODO Store Books
 class Library {
-  bookShelve = initBookShelve();
+  bookShelf = initBookShelf();
 
   displayBooks = (() =>
-    this.bookShelve.forEach((book) => ScreenController.displayBook(book)))();
+    this.bookShelf.forEach((book) => ScreenController.displayBook(book)))();
 
   // TODO Add Book function
   createBook = () => {
-    const returnData = (bookData) => this.addBook(new Book(bookData));
-    const bookForm = createForm(returnData);
-
-    ScreenController.displayForm(bookForm);
+    const useData = (bookData) => this.addBook(new Book(bookData));
+    ScreenController.displayForm(createForm(useData));
   };
 
   addBook = (book) => {
-    this.bookShelve.push(book);
+    this.bookShelf.push(book);
     ScreenController.displayBook(book);
-
     MemoryController.uploadBook(book);
-    MemoryController.uploadBookShelve(this.bookShelve);
   };
+
+  // findBook = (bookToFind) => {
+  //   const foundBook = this.bookShelf.filter(
+  //     (book) => book.id === bookToFind.id
+  //   );
+
+  //   return foundBook;
+  // };
 
   removeBook = (bookToRemove) => {
     //! Test
-    // filter book in in bookshelve
-    const findBook = this.bookShelve.filter(
-      (book) => book.id === bookToRemove.id
-    );
-    const bookIndex = this.bookShelve.indexOf(findBook);
-    // splice book
-    this.bookShelve.splice(bookIndex, 1);
-    console.log(findBook);
-    console.log(this.bookShelve);
+    // const getBook = this.findBook(bookToRemove);
+    const findCondition = (book) => book.id === bookToRemove.id;
+    const bookIndex = this.bookShelf.findIndex(findCondition);
+
+    this.bookShelf.splice(bookIndex, 1);
+    console.log(this.bookShelf);
     // remove book
-    MemoryController.deleteBook(bookToRemove);
-    MemoryController.uploadBookShelve(this.bookShelve);
+    MemoryController.uploadBookShelf(this.bookShelf);
   };
 }
 
 // initial run
 const activeLib = new Library();
-console.log(activeLib.bookShelve);
+console.log(activeLib.bookShelf);
 
 addBookBtn.addEventListener('click', () => {
   activeLib.createBook();

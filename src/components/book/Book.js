@@ -7,7 +7,7 @@ function incrementAndStoreId() {
 
 // TODO Book Creation
 export default class Book {
-  constructor({ title, author, description, pages, read }) {
+  constructor({ title, author, description, pages, finished }) {
     this.id = bookId;
     incrementAndStoreId();
     this.title = title;
@@ -16,11 +16,10 @@ export default class Book {
     this.author = author;
     this.description = description || '';
     this.pages = pages;
-    this.read = read || false;
+    this.finished = finished || false;
   }
 
-  changeRead() {
-    this.read = !this.read;
-    return this.read;
+  toggleFinished() {
+    this.finished = !this.finished;
   }
 }

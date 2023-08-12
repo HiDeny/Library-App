@@ -1,3 +1,5 @@
+import controlBookElement from './controlBookElement.js';
+
 function createTitle(book) {
   const title = document.createElement('h2');
   title.classList.add('cardTitle');
@@ -30,12 +32,13 @@ function createPages(book) {
   return pages;
 }
 
-function createRead() {
-  const read = document.createElement('button');
-  read.classList.add('cardReadBtn');
-  read.textContent = 'Read!';
+function createStatusBtn(book) {
+  const statusBtn = document.createElement('button');
+  statusBtn.classList.add('cardStatusBtn');
+  if (book.finished) statusBtn.classList.add('finished');
+  statusBtn.textContent = book.finished ? `Finished!` : `Let's read!`;
 
-  return read;
+  return statusBtn;
 }
 
 function createRemoveBtn() {
@@ -69,11 +72,13 @@ export default function createBookElement(book) {
   const pages = createPages(book);
   card.append(pages);
 
-  const read = createRead();
-  card.append(read);
+  const statusBtn = createStatusBtn(book);
+  card.append(statusBtn);
 
   const removeBtn = createRemoveBtn();
   card.append(removeBtn);
+
+  controlBookElement(book, statusBtn, removeBtn);
 
   return card;
 }

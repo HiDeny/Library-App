@@ -13,15 +13,18 @@ export default class MemoryController {
     localStorage.removeItem(book.id);
   }
 
-  static uploadBookShelve(library) {
-    const shelveToJSON = JSON.stringify(library);
-    localStorage.setItem('bookShelve', shelveToJSON);
+  static uploadBookShelf(bookShelf) {
+    if (!bookShelf) throw new Error('Missing bookshelf');
+    bookShelf.forEach((book) => this.uploadBook(book));
   }
 
-  static downloadBookShelve() {
-    const JSONShelve = localStorage.getItem('bookShelve') || [];
-    const checkCondition = JSONShelve.length > 0;
-    const bookShelve = checkCondition ? Array.from(JSON.parse(JSONShelve)) : [];
-    return bookShelve;
+  static downloadStoredBooks() {
+    const storedBooksLocal = Object.values(localStorage)
+      .sort()
+      .map((value) => JSON.parse(value))
+      .filter((value) => typeof value === 'object')
+      .filter((value) => !(value instanceof Array));
+
+    return storedBooksLocal;
   }
 }

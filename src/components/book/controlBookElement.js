@@ -1,4 +1,36 @@
-export default function controlBookElement() {}
+import MemoryController from '../../memory/localStorage.js';
+
+const updateStatusClass = (isFinished, statusBtn) => {
+  if (isFinished) statusBtn.classList.add('finished');
+  if (!isFinished) statusBtn.classList.remove('finished');
+};
+
+const updateStatusText = (isFinished) => {
+  const newTextContent = isFinished ? `Finished!` : `Let's read!`;
+  return newTextContent;
+};
+
+function handleClickStatusBtn(book, statusBtn) {
+  book.toggleFinished();
+
+  const isFinished = book.finished;
+  const updatedStatusBtn = statusBtn;
+
+  updateStatusClass(isFinished, updatedStatusBtn);
+  updatedStatusBtn.textContent = updateStatusText(isFinished);
+
+  MemoryController.uploadBook(book);
+}
+
+export default function controlBookElement(book, statusBtn, removeBtn) {
+  statusBtn.addEventListener('click', () => {
+    handleClickStatusBtn(book, statusBtn);
+  });
+
+  removeBtn.addEventListener('click', () => {
+    handleClickStatusBtn(book, statusBtn);
+  });
+}
 
 // if (book.read) {
 //   bookReadBtn.classList.add('finished');
