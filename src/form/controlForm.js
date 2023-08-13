@@ -7,6 +7,13 @@ export default function controlFormElement(useData) {
   const description = document.getElementById('descriptionForm');
   const pages = document.getElementById('pagesForm');
 
+  const allInputs = [
+    { element: title, errorMessage: 'Title is missing!' },
+    { element: author, errorMessage: 'Author is missing!' },
+    { element: description, errorMessage: 'Description is missing!' },
+    { element: pages, errorMessage: 'Pages are missing!' },
+  ];
+
   const removeForm = () => background.remove();
 
   const handleSubmit = () => {
@@ -15,55 +22,78 @@ export default function controlFormElement(useData) {
     useData(bookData);
   };
 
-  const checkCustomValidity = (event, errorMessage) => {
-    const element = event.target;
-    const isValid = element.validity.valueMissing;
-    element.setCustomValidity(isValid ? '' : errorMessage);
-    console.log(element);
+  const getUpdate = (isValid, errorMessage) => {
+    if (isValid) return { add: 'success', remove: 'error', error: '' };
+    return { add: 'error', remove: 'success', error: errorMessage };
+  };
+
+  const validateInput = (input, errorMessage) => {
+    const isValid = input.value.trim() !== '';
+
+    const elementLabel = input.parentElement;
+    const errorDisplay = elementLabel.querySelector('.errorDisplay');
+
+    const update = getUpdate(isValid, errorMessage);
+
+    input.classList.add(update.add);
+    input.classList.remove(update.remove);
+    errorDisplay.textContent = update.error;
+
+    return isValid;
+  };
+
+  const validateAll = () => {
+    const filter = (input) =>
+      validateInput(input.element, input.errorMessage) === false;
+    return allInputs.filter(filter);
   };
 
   bookForm.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
+      const notValid = validateAll();
+      console.log(notValid);
+      if (notValid.length > 0) return;
+
       handleSubmit(useData);
       removeForm();
     }
   });
 
   bookForm.addEventListener('submit', (event) => {
-    if (
-      !title.validity.valid ||
-      !author.validity.valid ||
-      !description.validity.valid
-    ) {
-      event.preventDefault();
-      console.log(title.checkValidity());
-    } else {
-      event.preventDefault();
-      handleSubmit(useData);
-      removeForm();
-    }
+    event.preventDefault();
+    const notValid = validateAll();
+    console.log(notValid);
+    if (notValid.length > 0) return;
+
+    handleSubmit(useData);
+    removeForm();
+  });
+
+  allInputs.forEach((input) => {
+    const { element } = input;
+    const { errorMessage } = input;
+
+    element.addEventListener('input', ({ target }) => {
+      validateInput(target, errorMessage);
+    });
   });
 
   cancelBtn.addEventListener('click', () => {
     removeForm();
   });
 
-  title.addEventListener('input', (event) => {
-    console.log(event.target.value);
-    console.log(event.target.validity.valueMissing);
-    checkCustomValidity(event, 'Title is missing!');
-  });
+  // title.addEventListener('input', ({ target }) => {});
 
-  author.addEventListener('input', (event) => {
-    checkCustomValidity(event, 'Author is missing!');
-  });
+  // author.addEventListener('input', ({ target }) => {
+  //   validateInput(target, 'Author is missing!');
+  // });
 
-  description.addEventListener('input', (event) => {
-    checkCustomValidity(event, 'Description is missing!');
-  });
+  // description.addEventListener('input', ({ target }) => {
+  //   validateInput(target, 'Description is missing!');
+  // });
 
-  pages.addEventListener('input', (event) => {
-    checkCustomValidity(event, 'Pages are missing!');
-  });
+  // pages.addEventListener('input', ({ target }) => {
+  //   validateInput(target, 'Pages are missing!');
+  // });
 }

@@ -270,3 +270,11 @@ textarea {
   min-height: 100px;
   background-color: rgb(236, 226, 212);
 }
+
+.error {
+  border-color: red;
+}
+
+.success {
+  border-color: greenyellow;
+}

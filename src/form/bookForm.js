@@ -14,6 +14,13 @@ function createCancelBtn() {
   return cancelBtn;
 }
 
+const createError = () => {
+  const error = document.createElement('div');
+  error.classList.add('errorDisplay');
+
+  return error;
+};
+
 function createLabel(name) {
   const label = document.createElement('label');
   label.setAttribute('for', name);
@@ -29,50 +36,54 @@ function createFormTitle() {
 }
 function getTitle() {
   const label = createLabel('title');
+  const error = createError();
 
   const title = document.createElement('input');
   title.setAttribute('type', 'text');
   title.setAttribute('id', 'titleForm');
   title.setAttribute('name', 'title');
   title.setAttribute('placeholder', 'Title');
-  // title.required = true;
 
   label.append(title);
+  label.append(error);
 
   return label;
 }
 
 function getAuthor() {
   const label = createLabel('author');
+  const error = createError();
 
   const author = document.createElement('input');
   author.setAttribute('type', 'text');
   author.setAttribute('id', 'authorForm');
   author.setAttribute('name', 'author');
   author.setAttribute('placeholder', 'Author');
-  author.required = true;
 
   label.append(author);
+  label.append(error);
 
   return label;
 }
 
 function getDescription() {
   const label = createLabel('description');
+  const error = createError();
 
   const description = document.createElement('textarea');
   description.setAttribute('id', 'descriptionForm');
   description.setAttribute('name', 'description');
   description.setAttribute('placeholder', 'Description');
-  description.required = true;
 
   label.append(description);
+  label.append(error);
 
   return label;
 }
 
 function getPages() {
   const label = createLabel('pages');
+  const error = createError();
 
   const pages = document.createElement('input');
   pages.setAttribute('type', 'number');
@@ -82,6 +93,7 @@ function getPages() {
   pages.setAttribute('placeholder', 'Pages');
 
   label.append(pages);
+  label.append(error);
 
   return label;
 }
