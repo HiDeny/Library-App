@@ -23,8 +23,9 @@ const createBook = () => {
     MemoryController.uploadBook(newBook);
   };
 
-  const completeForm = createForm(controlFormElement, useData);
+  const completeForm = createForm();
   ScreenController.displayForm(completeForm);
+  controlFormElement(useData);
 };
 
 const addBookBtn = document.getElementById('addBookBtn');

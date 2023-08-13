@@ -8,7 +8,7 @@ function createSubmitBtn() {
 
 function createCancelBtn() {
   const cancelBtn = document.createElement('button');
-  cancelBtn.classList.add('cancelFormBtn');
+  cancelBtn.id = 'cancelFormBtn';
   cancelBtn.innerText = 'x';
 
   return cancelBtn;
@@ -35,7 +35,7 @@ function getTitle() {
   title.setAttribute('id', 'titleForm');
   title.setAttribute('name', 'title');
   title.setAttribute('placeholder', 'Title');
-  title.required = true;
+  // title.required = true;
 
   label.append(title);
 
@@ -50,6 +50,7 @@ function getAuthor() {
   author.setAttribute('id', 'authorForm');
   author.setAttribute('name', 'author');
   author.setAttribute('placeholder', 'Author');
+  author.required = true;
 
   label.append(author);
 
@@ -63,6 +64,7 @@ function getDescription() {
   description.setAttribute('id', 'descriptionForm');
   description.setAttribute('name', 'description');
   description.setAttribute('placeholder', 'Description');
+  description.required = true;
 
   label.append(description);
 
@@ -84,16 +86,16 @@ function getPages() {
   return label;
 }
 
-function getRead() {
-  const label = createLabel('read');
-  label.innerText = 'Read:';
+function getFinished() {
+  const label = createLabel('finished');
+  label.innerText = 'Finished:';
 
-  const read = document.createElement('input');
-  read.setAttribute('type', 'checkbox');
-  read.setAttribute('id', 'readForm');
-  read.setAttribute('name', 'read');
+  const finished = document.createElement('input');
+  finished.setAttribute('type', 'checkbox');
+  finished.setAttribute('id', 'finishedForm');
+  finished.setAttribute('name', 'finished');
 
-  label.append(read);
+  label.append(finished);
 
   return label;
 }
@@ -114,25 +116,32 @@ function getBookInfo() {
   const pages = getPages();
   bookInfo.append(pages);
 
-  const read = getRead();
-  bookInfo.append(read);
+  const finished = getFinished();
+  bookInfo.append(finished);
 
   return bookInfo;
 }
 
+function createBookForm() {
+  const bookForm = document.createElement('form');
+  // bookForm.noValidate = true;
+  bookForm.setAttribute('id', 'bookForm');
+  bookForm.setAttribute('class', 'bookForm');
+
+  return bookForm;
+}
+
 function createBackground() {
   const background = document.createElement('div');
-  background.className = 'formBackground';
+  background.id = 'formBackground';
 
   return background;
 }
 
-export default function createFormElement(formController, useData) {
+export default function createFormElement() {
   const background = createBackground();
 
-  const bookForm = document.createElement('form');
-  bookForm.setAttribute('id', 'bookForm');
-  bookForm.setAttribute('class', 'bookForm');
+  const bookForm = createBookForm();
   background.append(bookForm);
 
   const formTitle = createFormTitle();
@@ -146,8 +155,6 @@ export default function createFormElement(formController, useData) {
 
   const submitBtn = createSubmitBtn();
   bookForm.append(submitBtn);
-
-  formController(useData, background, bookForm, cancelBtn);
 
   return background;
 }
