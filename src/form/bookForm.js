@@ -24,6 +24,7 @@ const createError = () => {
 function createLabel(name) {
   const label = document.createElement('label');
   label.setAttribute('for', name);
+  label.classList.add(`for${name}`);
   return label;
 }
 

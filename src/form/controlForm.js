@@ -43,17 +43,22 @@ export default function controlFormElement(useData) {
   };
 
   const validateAll = () => {
-    const filter = (input) =>
-      validateInput(input.element, input.errorMessage) === false;
+    const filter = ({ element, errorMessage }) =>
+      validateInput(element, errorMessage) === false;
     return allInputs.filter(filter);
   };
+
+  allInputs.forEach(({ element, errorMessage }) => {
+    element.addEventListener('input', ({ target }) => {
+      validateInput(target, errorMessage);
+    });
+  });
 
   bookForm.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      const notValid = validateAll();
-      console.log(notValid);
-      if (notValid.length > 0) return;
+      const notValidInputs = validateAll();
+      if (notValidInputs.length > 0) return;
 
       handleSubmit(useData);
       removeForm();
@@ -62,38 +67,14 @@ export default function controlFormElement(useData) {
 
   bookForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    const notValid = validateAll();
-    console.log(notValid);
-    if (notValid.length > 0) return;
+    const notValidInputs = validateAll();
+    if (notValidInputs.length > 0) return;
 
     handleSubmit(useData);
     removeForm();
   });
 
-  allInputs.forEach((input) => {
-    const { element } = input;
-    const { errorMessage } = input;
-
-    element.addEventListener('input', ({ target }) => {
-      validateInput(target, errorMessage);
-    });
-  });
-
   cancelBtn.addEventListener('click', () => {
     removeForm();
   });
-
-  // title.addEventListener('input', ({ target }) => {});
-
-  // author.addEventListener('input', ({ target }) => {
-  //   validateInput(target, 'Author is missing!');
-  // });
-
-  // description.addEventListener('input', ({ target }) => {
-  //   validateInput(target, 'Description is missing!');
-  // });
-
-  // pages.addEventListener('input', ({ target }) => {
-  //   validateInput(target, 'Pages are missing!');
-  // });
 }
