@@ -228,7 +228,6 @@ header {
 
 #titleForm,
 #authorForm,
-#pagesForm,
 #finishedForm {
   font-size: 1.2rem;
 }
@@ -237,14 +236,58 @@ header {
   align-self: center;
   justify-self: center;
 
-  width: 30%;
+  width: 45%;
+
+  font-size: 0.9rem;
+}
+
+#finishedForm {
+  align-self: center;
+  justify-content: center;
+
+  width: 20%;
 }
 
 .bookInfo {
   display: grid;
 
-  grid-template-rows: 1fr 1fr 3fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 3fr 1fr;
+  grid-template-columns: 1fr 1fr;
   margin: 0 1rem;
+}
+
+.fortitle {
+  grid-column: 1 / span 2;
+}
+
+.forauthor {
+  grid-column: 1 / span 2;
+}
+
+.fordescription {
+  grid-column: 1 / span 2;
+  grid-template-rows: 90% 10%;
+}
+
+.forpages {
+  grid-column: 2;
+  align-self: center;
+  justify-self: end;
+}
+
+.forfinished {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: baseline;
+  margin: 0;
+  font-family: 'Mate SC';
+  color: #40241a;
+
+  grid-row: 4;
+
+  margin-top: 1rem;
 }
 
 .submitBtn {
@@ -262,6 +305,8 @@ header {
   font-size: 1.3rem;
 
   cursor: pointer;
+
+  transition: background-color 500ms;
 }
 
 .submitBtn:hover {
@@ -270,8 +315,8 @@ header {
 
 #cancelFormBtn {
   position: absolute;
-  right: -5px;
-  top: -50px;
+  right: 10px;
+  top: 10px;
   border: 0px;
   background-color: transparent;
   cursor: pointer;
@@ -299,10 +344,6 @@ input {
 input:focus,
 textarea:focus {
   outline: 1px black;
-}
-
-input:invalid {
-  border: 2px solid pink;
 }
 
 textarea {
@@ -334,74 +375,10 @@ textarea {
 
 .error {
   border-bottom: 0.2rem #970000 solid;
+  transition: border-bottom 1s ease;
 }
 
 .success {
   border-bottom: solid 0.15rem #01821c;
-}
-
-/* style.css | http://localhost:5501/dist/style.css?_cacheOverride=1691943017662 */
-
-.bookInfo {
-  /* grid-template-rows: 1fr 1fr 3fr 1fr 1fr; */
-  grid-template-rows: 1fr 1fr 3fr 1fr;
-  grid-template-columns: 1fr 1fr;
-}
-
-#pagesForm {
-  /* width: 30%; */
-  width: 65%;
-  text-align: center;
-}
-
-/* Inline #5 | http://localhost:5501/dist/ */
-
-.fortitle {
-  /* grid: 1 span 2; */
-  grid-area: 1 span 2;
-  grid-column: 1 / span2;
-}
-
-.forauthor {
-  grid-column: 1 / span 2;
-}
-
-.fordescription {
-  grid-column: 1 / span2;
-  grid-template: ;
-  grid-template-rows: 90% 10%;
-}
-
-.forpages {
-  grid-column: 2;
-  align-self: center;
-  justify-self: end;
-}
-
-.forfinished {
-  grid-column: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: baseline;
-  margin: 0;
-  font-family: 'Mate SC';
-  color: #40241a;
-  grid: ;
-  grid-row: 4;
-  margin: ;
-  margin-top: 1rem;
-}
-
-#finishedForm {
-  grid-row: ;
-  justify-content: center;
-  align-self: center;
-}
-
-#finishedForm {
-}
-
-#finishedForm {
-  width: 20%;
+  transition: border-bottom 1s ease;
 }
